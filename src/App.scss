@@ -1,0 +1,193 @@
+//-----COLORS-----//
+//PRIMARY RED
+$primary-color-yellow: rgb(160, 105, 30);
+
+//PRIMARY BLUE
+$primary-color-blue: rgb(0, 75, 85);
+
+//SECONDARY YELLOW
+$secondary-color-yellow5: rgb(90, 60, 0);
+$secondary-color-yellow2: rgb(140, 90, 25);
+// $secondary-color-yellow-2: rgb(180, 125, 0);
+$secondary-color-yellow-5: rgb(230, 155, 0);
+$secondary-color-yellow-8: rgb(255, 195, 75);
+
+//SECONDARY BLUE
+$secondary-color-blue5: rgb(0, 50, 55);
+$secondary-color-blue2: rgb(0, 60, 85);
+$secondary-color-blue-2: rgb(0, 100, 110);
+$secondary-color-blue-5: rgb(0, 120, 140);
+$secondary-color-blue-8: rgb(0, 165, 195);
+
+//NEUTRAL
+$neutral-color-white: rgb(255,255,255);
+$neutral-color-off-white: rgb(250,250,250);
+$neutral-color-light-gray: rgb(180,180,180);
+$neutral-color-medium-gray: rgb(100,100,100);
+$neutral-color-dark-gray: rgb(50,50,50);
+$neutral-color-black: rgb(30, 30, 30);
+
+//FORM COLORS
+// $error-color-red: rgb(140, 10, 0);
+// $error-color-red-strong: rgb(90, 5, 0);
+$success-color-green: rgb(15, 180, 15);
+
+//SUPPLY STATUS COLOR
+$supply-high-green: rgb(65, 160, 70);
+$supply-medium-yellow: rgb(205, 175, 45);
+$supply-low-red: rgb(205, 40, 40);
+
+// //-----COLORS-----//
+// //PRIMARY RED
+// $primary-color-yellow: rgb(155, 110, 45);
+
+// //PRIMARY BLUE
+// $primary-color-blue: rgb(55, 85, 90);
+
+// //SECONDARY YELLOW
+$secondary-color-yellow-2: rgb(187, 133, 63);
+// $secondary-color-yellow-5: rgb(225, 175, 120);
+// $secondary-color-yellow-8: rgb(250, 210, 160);
+
+// //SECONDARY BLUE
+// $secondary-color-blue-2: rgb(75, 115, 120);
+// $secondary-color-blue-5: rgb(125, 165, 175);
+// $secondary-color-blue-8: rgb(160, 185, 190);
+
+// //NEUTRAL
+// $neutral-color-white: rgb(255,255,255);
+// $neutral-color-light-gray: rgb(180,180,180);
+// $neutral-color-medium-gray: rgb(100,100,100);
+// $neutral-color-dark-gray: rgb(50,50,50);
+// $neutral-color-black: rgb(30, 30, 30);
+
+// //FORM COLORS
+$error-color-red: rgb(180, 45, 45);
+$error-color-red-strong: rgb(145, 15, 15);
+// $success-color-green: rgb(15, 180, 15);
+
+
+
+//-----Typography-----//
+
+//-----FONTS-----//
+@font-face {
+  font-family: 'Lato';
+  src: url('/fonts/Lato-Light.ttf') format('truetype');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'Lato';
+  src: url('/fonts/Lato-Regular.ttf') format('truetype');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Lato';
+  src: url('/fonts/Lato-Semibold.ttf') format('truetype');
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: 'Lato';
+  src: url('/fonts/Lato-Bold.ttf') format('truetype');
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'Lato';
+  src: url('/fonts/Lato-Italic.ttf') format('truetype');
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Lato';
+  src: url('/fonts/Lato-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+}
+
+$fnormal: 'Lato', sans-serif;
+$fitalic: 'Lato', sans-serif;
+
+$plusPX: clamp(42px, 3.1vw, 48px);
+$f42px: clamp(36px, 2.8vw, 42px);
+$f36px: clamp(32px, 2.5vw, 36px);
+$f32px: clamp(28px, 2.2vw, 32px);
+$f30px: clamp(26px, 2.1vw, 30px);
+$f28px: clamp(24px, 2.0vw, 28px);
+$f26px: clamp(24px, 1.9vw, 26px);
+$f24px: clamp(20px, 1.65vw, 24px);
+$f22px: clamp(18px, 1.55vw, 22px);
+$f20px: clamp(18px, 1.32vw, 20px);
+$f18px: clamp(16px, 1.21vw, 18px);
+$f16px: clamp(14px, 1.1vw, 16px);
+$f15px: clamp(13px, 1.03vw, 15px);
+$f14px: clamp(12px, 0.96vw, 14px);
+$f13px: clamp(11px, 0.9vw, 13px);
+$f12px: clamp(10px, 0.81vw, 12px);
+$f11px: clamp(9px, 0.75vw, 11px);
+$f10px: clamp(8px, 0.69vw, 10px);
+
+$fbook: 300;
+$fregular: 400;
+$fmedium: 500;
+$fsemiBold: 600;
+$fbold: 700;
+$fextraBold: 800;
+$fheavy: 900;
+
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: 0.04em;
+}
+
+html{scroll-behavior: smooth !important; transition: 0.8s !important;}
+/* Barras de Rolagem (tamanho | fundo da barra onde corre a seta | alça da barra que mostra a altura que está) */
+::-webkit-scrollbar {width:12px; height: 12px;}
+::-webkit-scrollbar-track {background: $primary-color-yellow;}
+::-webkit-scrollbar-thumb {background: $primary-color-blue;}
+::-webkit-scrollbar:vertical{display: none;}
+
+
+html, body, #root{
+    touch-action:pan-y;
+    width: 100%;
+    height: 100%;
+}
+
+a{
+    text-decoration: none;
+}
+//Exemplo de uso: $fregular: 400, $f16px, $fnormal, $neutral-color-black, 1
+@mixin font-config($weight, $size, $type, $color, $color-opacity) {
+  font: $weight $size $type;
+  color: rgba($color, $color-opacity);
+}
+
+
+@mixin horizontal-align($width, $height, $radius){
+  width: $width;
+  height: $height;
+  border-radius: $radius;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin vertical-align($width, $height, $radius){
+  width: $width;
+  height: $height;
+  border-radius: $radius;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+}

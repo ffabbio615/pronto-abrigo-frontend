@@ -1,0 +1,42 @@
+@use '../../App.scss' as *;
+
+.local-loader-container{
+    @include horizontal-align(100%,100%,0px);
+    background: linear-gradient(135deg, rgba($neutral-color-off-white, 0.9) 0%, rgba($neutral-color-white, 1) 25%, rgba($neutral-color-off-white, 0.9) 75%);
+    position: relative;
+    z-index: 3000;
+
+    img{
+        height: 20%;
+        width: auto;
+        opacity: 0.85;
+        filter: drop-shadow(0 0 10px rgba($neutral-color-black,0.4));
+        animation: animation-logo 1s ease-in-out infinite alternate;
+    }
+
+    @keyframes animation-logo {
+        0% { transform: rotate(30deg); }
+        100% { transform: rotate(-20deg); }
+    }
+
+
+    .local-loader {
+        height: 16%;
+        aspect-ratio: 1;
+        padding: 12px;
+        border-radius: 50%;
+        box-sizing: border-box;
+        mask: conic-gradient(rgb(255,255,255)) content-box exclude,conic-gradient(rgb(255,255,255));
+        filter: blur(12px);
+      }
+      .local-loader:before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: conic-gradient(rgba($neutral-color-black,0) 35%, $secondary-color-blue2, $secondary-color-blue2 65%);
+        animation: l1 1.5s linear infinite;
+      }
+      @keyframes l1 {
+        to {rotate: 1turn}
+      }
+}
