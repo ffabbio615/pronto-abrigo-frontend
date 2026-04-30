@@ -1,0 +1,63 @@
+@use '../../App.scss' as *;
+
+.confirm-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+  
+    .confirm-box {
+      width: 500px;
+      height: 250px;
+      background: rgba($secondary-color-yellow-2, 1);
+      border-radius: 8px;
+      border: 1px solid rgba($primary-color-yellow, 0.5);
+      box-shadow: 0px 0px 20px rgba($neutral-color-black, 0.8);
+      text-align: center;
+      display: grid;
+      grid-template-rows: 22% 47% 30%;
+      align-items: center;
+      justify-items: center;
+  
+      .confirm-box-title{
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: $primary-color-yellow;
+          border-radius: 8px 8px 0 0;
+          @include font-config($fbold, $f24px, $fnormal, $neutral-color-white, 1);
+      }
+  
+      .confirm-box-message{
+          @include font-config($fsemiBold, $f16px, $fnormal, $neutral-color-white, 1);
+          letter-spacing: 0.5px;
+      }
+
+      div{
+
+          button{
+            width: 170px;
+            height: 40px;
+            border: none;
+            border-radius: 5px;
+            @include font-config($fsemiBold, $f16px, $fnormal, $neutral-color-white, 1);
+            cursor: pointer;
+            background-color: rgba($primary-color-yellow, 0.5);
+            transition: background-color 0.2s ease;
+
+            &:hover{
+                background-color: $primary-color-yellow;
+            }
+
+            &:active{
+                background-color: $secondary-color-yellow2;
+            }
+        }
+      }
+    }
+}

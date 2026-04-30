@@ -7,6 +7,10 @@ import ShelterUpdate from '../shelter/update/ShelterUpdate';
 import SupplyUpdate from '../supply/update/SupplyUpdate';
 import LocalLoader from '../../components/loader/LocalLoader';
 import useStore  from '../../store/useStore';
+import SupplyRegister from '../supply/register/SupplyRegister';
+import DonationsList from '../donation/get/DonationsList';
+import ActiveDonationsList from '../donation/put/ActiveDonationsList';
+import EntityRegister from '../entity/register/EntityRegister';
 
 export default function Home() {
 
@@ -42,37 +46,73 @@ export default function Home() {
     fetchData();
   }, []);
 
-    const[profileMenuItem, setProfileMenuItem] = useState<"updateShelter" | "getSupplies" | "getEntities" | "getDonations" | "default">("default");
+    const[profileMenuItem, setProfileMenuItem] = useState<
+    "default" | "updateShelter" | "getSupplies" | "getEntities" | "getDonations" | 
+    "registerEntity" | "registerSupply" | "confirmDonations">("default");
 
     return(
         <div className="home-main-container">
             <div className='home-panels-container'>
                 <div className="profile-panel">
                     <img className="home-profile-picture" src={shelter?.photo_url || "https://cdn-icons-png.flaticon.com/512/149/149071.png"} alt="Foto de perfil"/>
-                    <p>{`Seja bem-vinda, ${shelter?.nickname || "Nome do Abrigo"}!`}</p>
-                    <button onClick={()=> { setLocalLoader(true); setTimeout(()=> setLocalLoader(false), 1000);  setProfileMenuItem("default"); }}>Início</button>
-                    <button onClick={() => { setLocalLoader(true);  setProfileMenuItem("updateShelter"); }}>Editar Cadastro</button>
-                    <button onClick={()=> { setLocalLoader(true);  setProfileMenuItem("getSupplies"); }}>Mantimentos</button>
-                    <button onClick={()=> { setLocalLoader(true);  setProfileMenuItem("getEntities"); }}>Acolhidos</button>
-                    <button onClick={()=> { setLocalLoader(true);  setProfileMenuItem("getDonations"); }}>Doações</button>
-                    <button onClick={logout}>Sair</button>
+                    <p>{`Seja bem-vindo${shelter?.nickname ? ", " + shelter.nickname : ""}!`}</p>
+                    
+                    <button className={profileMenuItem === "default" ? 'active-page': ''} 
+                    onClick={()=> { if(profileMenuItem !=="default") setLocalLoader(true); setTimeout(()=> setLocalLoader(false), 1000);  setProfileMenuItem("default"); }}>
+                        <img src='/icon/homeIcon.svg' alt='Ícone de mantimentos'/>Início
+                    </button>
+
+                    <button className={profileMenuItem === "updateShelter" ? 'active-page': ''} 
+                    onClick={() => { if(profileMenuItem !=="updateShelter") setLocalLoader(true);  setProfileMenuItem("updateShelter"); }}>
+                        <img src='/icon/shelterEditIcon.svg' alt='Ícone de mantimentos'/> Editar Cadastro
+                    </button>
+
+                    <button className={profileMenuItem === "getEntities" ? 'active-page': ''} 
+                    onClick={()=> { if(profileMenuItem !=="getEntities") setLocalLoader(true);  setProfileMenuItem("getEntities"); }}>
+                        <img src='/icon/entitiesIcon.svg' alt='Ícone de mantimentos'/> Acolhidos
+                    </button>
+
+                    <button className={profileMenuItem === "getSupplies" ? 'active-page': ''} 
+                    onClick={()=> { if(profileMenuItem !=="getSupplies") setLocalLoader(true);  setProfileMenuItem("getSupplies"); }}>
+                        <img src='/icon/supplyIcon.svg' alt='Ícone de mantimentos'/> Mantimentos
+                    </button>
+
+                    <button className={profileMenuItem === "getDonations" ? 'active-page': ''} 
+                    onClick={()=> { if(profileMenuItem !=="getDonations") setLocalLoader(true);  setProfileMenuItem("getDonations"); }}>
+                        <img src='/icon/donationsIcon.svg' alt='Ícone de mantimentos'/> Doações
+                    </button>
+
+                    <button onClick={logout}>
+                        <img src='/icon/logoutIcon.svg' alt='Ícone de mantimentos'/> Sair
+                    </button>
                 </div>
 
-                <div className="menu-panel">
+                <div className="panel-menu">
                     <LocalLoader />
-                    {profileMenuItem === "default" && 
-                        <div>
-                            <button>Cadastrar Acolhido</button>
-                            <button>Cadastrar Mantimento</button>
-                            <button>Confirmar Doações</button>
-                            <button></button>
+                    <div className='menu-panel-background'></div>
+                    <div className='panel-content-container'>
+                        {profileMenuItem === "default" && 
+                            <div className='home-menu-container'>
+                                <button onClick={()=> { setLocalLoader(true);  setProfileMenuItem("registerEntity"); }}>Cadastrar Desabrigado</button>
+                                <button onClick={()=> { setLocalLoader(true);  setProfileMenuItem("registerSupply"); }}>Cadastrar Mantimento</button>
+                                <button onClick={()=> { setLocalLoader(true);  setProfileMenuItem("confirmDonations"); }}>Confirmar Doações</button>
+                                <button></button>
+                                <img className='pronto-abrigo-logo' src='/img/prontoAbrigoLogo.png' alt='Logo Pronto Abrigo' />
+                                
+                            </div>
+                        }
 
-                        </div>
-                    }
-                    {profileMenuItem === "updateShelter" && shelter && <ShelterUpdate shelter={shelter} />}
-                    {profileMenuItem === "getSupplies" && <SupplyUpdate />}
-                    {profileMenuItem === "getEntities" && <p>Acolhidos</p>}
-                    {profileMenuItem === "getDonations" && <p>Doações</p>}
+                        {/* Páginas dos botões de dentro do menu lateral  */}
+                        {profileMenuItem === "updateShelter" && shelter && <ShelterUpdate shelter={shelter} />}
+                        {profileMenuItem === "getEntities" && <p>Acolhidos</p>}
+                        {profileMenuItem === "getSupplies" && <SupplyUpdate />}
+                        {profileMenuItem === "getDonations" && <DonationsList />}
+
+                        {/* Páginas dos botões de dentro do menu central  */}
+                        {profileMenuItem === "registerEntity" && <EntityRegister />}
+                        {profileMenuItem === "registerSupply" && <SupplyRegister />}
+                        {profileMenuItem === "confirmDonations" && <ActiveDonationsList />}
+                    </div>
                 </div>
             </div>
         </div>

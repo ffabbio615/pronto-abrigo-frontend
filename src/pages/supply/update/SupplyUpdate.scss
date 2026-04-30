@@ -34,7 +34,7 @@
         justify-items: center;
         align-content:start;
         overflow-y: scroll;
-        padding: 12px;
+        padding: 20px;
 
         .card-container{
             width: 100%;
@@ -45,13 +45,53 @@
             display: grid;
             grid-template-columns: 25% 75%;
             background-color: $neutral-color-white;
-            // border: 1px solid $neutral-color-off-white;
             box-shadow: 0 0 10px rgba($neutral-color-dark-gray, 0.5);
             cursor: pointer;
-            transition: transform 0.3s ease;
+            transition: all 0.3s ease;
+            position: relative;
 
             &:hover{
                 transform: scale(1.05);
+            }
+
+            &:hover .edit-delete-buttons-container{
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            .edit-delete-buttons-container{
+                position: absolute;
+                display: flex;
+                column-gap: 4px;
+                right: -35px;
+                top: -10px;
+                opacity: 0;
+                pointer-events: none;
+                transition: 0.3s;
+                
+                button:first-child{
+                    background-color: $supply-medium-yellow;
+                }
+                
+                button:last-child{
+                    background-color: $supply-low-red;
+                }
+                    
+                button{
+                    @include horizontal-align(22px, 22px, 50%);
+                    border: none;
+                    cursor: pointer;
+                    transition: transform 0.3s ease;
+
+                    &:hover{
+                        transform: scale(1.2);
+                    }
+
+                    img{
+                        height: 12px;
+                        width: auto;
+                    }
+                }
             }
 
             .title-icon-container{
@@ -81,7 +121,7 @@
                 strong{
                     width: 100%;
                     text-align: center;
-                    @include font-config($fbold, 16px, $fnormal, $neutral-color-white, 1);
+                    @include font-config($fbold, 15px, $fnormal, $neutral-color-white, 1);
                 }
             }
 
@@ -147,6 +187,87 @@
                     }
                 }
             }
+
+            .quantities-container-edit-mode{
+                grid-template-rows: 20px 35px 105px;
+                align-items: end;
+
+                .supply-edit-container{
+                    width: 100%;
+                    display: flex;
+                    flex-wrap: wrap;
+                    row-gap: 16px;
+                    justify-content: center;
+
+                    .supply-edit-inputs-container{
+                        display: flex;
+                        width: 100%;
+                        justify-content: center;
+
+                        div{
+                            display: flex;
+                            justify-content: center;
+                            flex-wrap: wrap;
+                            row-gap: 4px;
+
+                            label{
+                                @include font-config($fsemiBold, $f14px, $fnormal, $neutral-color-dark-gray, 1);
+                            }
+                            
+                            input{
+                                width: 60px;
+                                height: 25px;
+                                min-height: 25px;
+                                border: 2px solid $neutral-color-light-gray;
+                                border-radius: 5px;
+                                @include font-config($fbold, $f14px, $fnormal, $neutral-color-dark-gray, 1);
+                                
+                                &::placeholder{
+                                    @include font-config($fbold, $f14px, $fnormal, $neutral-color-light-gray, 1);
+                                }
+                            }
+                        }
+
+                    }
+
+                    .supply-edit-buttons-container{
+                        display: flex;
+                        width: 100%;
+                        justify-content: center;
+                        column-gap: 12px;
+
+                        button{
+                            width: 90px;
+                            height: 28px;
+                            border: none;
+                            border-radius: 5px;
+                            @include font-config($fsemiBold, $f16px, $fnormal, $neutral-color-white, 1);
+                            cursor: pointer;
+                            transition: background-color 0.2s ease;
+
+                            &:first-child{
+                                background-color: $supply-low-red-emphasis;
+
+                                &:hover{
+                                    background-color: $supply-low-red;
+                                }
+                            }
+
+                            &:last-child{
+                                background-color: $supply-high-green-emphasis;
+
+                                &:hover{
+                                    background-color: $supply-high-green;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .card-container-edit-mode{
+            height: 192px;
         }
 
     }

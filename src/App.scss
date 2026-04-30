@@ -13,7 +13,9 @@ $secondary-color-yellow-5: rgb(230, 155, 0);
 $secondary-color-yellow-8: rgb(255, 195, 75);
 
 //SECONDARY BLUE
-$secondary-color-blue5: rgb(0, 50, 55);
+$secondary-color-blue10: rgb(0, 50, 55);
+$secondary-color-blue8: rgb(10, 60, 95);
+$secondary-color-blue5: rgb(55, 80, 100);
 $secondary-color-blue2: rgb(0, 60, 85);
 $secondary-color-blue-2: rgb(0, 100, 110);
 $secondary-color-blue-5: rgb(0, 120, 140);
@@ -21,7 +23,7 @@ $secondary-color-blue-8: rgb(0, 165, 195);
 
 //NEUTRAL
 $neutral-color-white: rgb(255,255,255);
-$neutral-color-off-white: rgb(250,250,250);
+$neutral-color-off-white: rgb(245,245,245);
 $neutral-color-light-gray: rgb(180,180,180);
 $neutral-color-medium-gray: rgb(100,100,100);
 $neutral-color-dark-gray: rgb(50,50,50);
@@ -34,8 +36,10 @@ $success-color-green: rgb(15, 180, 15);
 
 //SUPPLY STATUS COLOR
 $supply-high-green: rgb(65, 160, 70);
+$supply-high-green-emphasis: rgb(50, 120, 50);
 $supply-medium-yellow: rgb(205, 175, 45);
 $supply-low-red: rgb(205, 40, 40);
+$supply-low-red-emphasis: rgb(145, 25, 25);
 
 // //-----COLORS-----//
 // //PRIMARY RED
@@ -146,6 +150,7 @@ $fheavy: 900;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   letter-spacing: 0.04em;
+  user-select: none;
 }
 
 html{scroll-behavior: smooth !important; transition: 0.8s !important;}

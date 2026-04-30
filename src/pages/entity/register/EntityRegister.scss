@@ -1,0 +1,72 @@
+@use '../../../App.scss' as *;
+
+.entity-register-container{
+
+    .entity-title-container{
+        @include vertical-align(100%, 120px, 0);
+        flex-wrap: wrap;
+        
+        h2{
+            text-align: center;
+            @include font-config($fextraBold, $f42px, $fnormal, $neutral-color-dark-gray, 1);
+            margin-bottom: 12px;
+        }
+        p{
+            text-align: center;
+            @include font-config($fregular, 15px, $fnormal, $neutral-color-dark-gray, 1);
+        }
+    }
+
+    form{
+
+        .public-photo-checkbox{
+            @include horizontal-align(90%, 45px, 0);
+            column-gap: 4px;
+            justify-content: left;
+            cursor: pointer;
+
+            input{
+                width: 20px;
+                height: 20px;
+                cursor: pointer;
+            }
+        }
+
+        .birth-container{
+            display: flex;
+            align-items: center;
+            width: 90%;
+            column-gap: 12px;
+
+            div{
+                width: 50%;
+
+                input{
+                    width: 100%;
+                }
+            }
+
+            p{
+                @include horizontal-align(auto, 70px, 0);
+                align-items: end;
+            }
+        }
+
+        button{
+            width: 220px;
+            height: 45px;
+            min-height: 45px;
+            background-color: $secondary-color-blue-2;
+            border: none;
+            border-radius: 20px;
+            @include font-config($fsemiBold, $f16px, $fnormal, $neutral-color-white, 1);
+            margin-top: 24px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        
+            &:hover{
+                background-color: $primary-color-blue;
+            }
+        }
+    }
+}

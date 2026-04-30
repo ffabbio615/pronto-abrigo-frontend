@@ -5,36 +5,106 @@
     font-family: $fnormal;
 
     .home-panels-container{
-        // width: 75%;
-        // min-width: 900px;
-        // height: 85%;
-        // min-height: 600px;
         width: 100%;
         height: 100%;
         display: grid;
         grid-template-columns: 300px 1fr;
-        // border-radius: 10px;
-        // box-shadow: 0px 0px 30px rgba($neutral-color-black, 1);
 
         .profile-panel{
+            width: 100%;
             height: 100%;
-            background-color: $secondary-color-blue2;
-            // border-radius: 10px 0 0 10px;
+            background-color: $primary-color-blue;
+            display: flex;
+            flex-direction: column;
+            justify-content: start;
+            align-items: center;
+            row-gap: 12px;
+            padding-block: 48px;
 
             .home-profile-picture{
-                width: 120px;
-                height: 120px;
+                width: 150px;
+                height: 150px;
                 object-fit: cover;
+                box-shadow: 2px 2px 15px rgba($neutral-color-dark-gray, 0.8);
                 border-radius: 50%;
+                margin-bottom: 8px;
+            }
+
+            p{
+                text-align: center;
+                text-transform: uppercase;
+                color: $neutral-color-white;
+                @include font-config($fbold, 20px, $fnormal, $neutral-color-white, 1);
+                margin-bottom: 25%;
+            }
+
+            button{
+                width: 100%;
+                height: 50px;
+                display: flex;
+                align-items: center;
+                column-gap: 12px;
+                border: none;
+                padding-top: 1px;
+                padding-inline: 15%;
+                @include font-config($fregular, 18px, $fnormal, $neutral-color-white, 1);
+                text-align: left;
+                background-color: rgba($secondary-color-blue5, 0);
+                cursor: pointer;
+                transition: 0.5s;
+
+                &:hover{
+                    background-color: rgba($primary-color-yellow, 1);
+                }
+
+                img{
+                    height: 25px;
+                    width: auto;
+                }
+            }
+
+            .active-page{
+                background-color: rgba($primary-color-yellow, 0.8);
             }
         }
 
-        .menu-panel{
+        .panel-menu{
             height: 100%;
-            // border-radius: 0 10px 10px 0;
             background-color: $neutral-color-white;
             overflow: auto;
             position: relative;
+
+            .menu-panel-background{
+                width: 100%;
+                height: 100%;
+                background-image: url('/img/homeBackground.png');
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: 50% 50%;
+                opacity: 0.4;
+                position: absolute;
+                z-index: 0;
+            }
+
+            .panel-content-container{
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                z-index: 4;
+
+                .home-menu-container{
+                    width: 100%;
+                    height: 100%;
+                    position: relative;
+    
+                    .pronto-abrigo-logo{
+                        height: 120px;
+                        position: absolute;
+                        right: 24px;
+                        bottom: 24px;
+                    }
+                }
+            }
         }
     }
 }

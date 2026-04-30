@@ -1,6 +1,5 @@
 import './Login.scss';
 import { useEffect, useState } from "react";
-import {api} from "../../services/api";
 import useStore from '../../store/useStore';
 import useAlertStore from "../../store/useAlertStore";
 import { login } from "../../services/auth";
@@ -16,7 +15,6 @@ export default function Login() {
 
   useEffect(() => {
     setLoader(true);
-    api.get("/shelters"); // endpoint simples para acordar o backend e evitar lentidão no primeiro acesso
     setTimeout(() => {
       setLoader(false);
     }, 2000);
