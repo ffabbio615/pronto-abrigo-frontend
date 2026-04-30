@@ -22,7 +22,7 @@ export const updateSupply = async (id: number, item: Supply) => {
   return response.data;
 };
 
-export const deleteSupply = async (id) => {
+export const deleteSupply = async (id: number) => {
   const response = await api.delete(`/supplies/${id}`);
   return response.data;
 };
