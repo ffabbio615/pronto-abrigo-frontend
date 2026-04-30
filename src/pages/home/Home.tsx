@@ -94,11 +94,20 @@ export default function Home() {
                     <div className='panel-content-container'>
                         {profileMenuItem === "default" && 
                             <div className='home-menu-container'>
-                                <button onClick={()=> { setLocalLoader(true);  setProfileMenuItem("registerEntity"); }}>Cadastrar Desabrigado</button>
-                                <button onClick={()=> { setLocalLoader(true);  setProfileMenuItem("registerSupply"); }}>Cadastrar Mantimento</button>
-                                <button onClick={()=> { setLocalLoader(true);  setProfileMenuItem("confirmDonations"); }}>Confirmar Doações</button>
-                                <button></button>
-                                <img className='pronto-abrigo-logo' src='/img/prontoAbrigoLogo.png' alt='Logo Pronto Abrigo' />
+                                <div className='home-title-container'>
+                                    <h1>Editar dados do Abrigo</h1>
+                                    <p>Preencha os campos abaixo para editar os dados do seu abrigo.</p>
+                                </div>
+                                <div className='buttons-container'>
+                                    <button className='menu-card' onClick={()=> { setLocalLoader(true);  setProfileMenuItem("registerEntity"); }}>
+                                        <img src='/icon/entitiesIcon.svg' alt='Ícone de mantimentos'/> Cadastrar Desabrigado</button>
+                                    <button className='menu-card' onClick={()=> { setLocalLoader(true);  setProfileMenuItem("registerSupply"); }}>
+                                        <img src='/icon/supplyIcon.svg' alt='Ícone de mantimentos'/> Cadastrar Mantimento</button>
+                                    <button className='menu-card' onClick={()=> { setLocalLoader(true);  setProfileMenuItem("confirmDonations"); }}>
+                                        <img src='/icon/donationsIcon.svg' alt='Ícone de mantimentos'/> Confirmar Doações</button>
+                                    <button></button>
+                                </div>
+                                    <img className='pronto-abrigo-logo' src='/img/prontoAbrigoLogo.png' alt='Logo Pronto Abrigo' />
                                 
                             </div>
                         }
@@ -110,8 +119,8 @@ export default function Home() {
                         {profileMenuItem === "getDonations" && <DonationsList />}
 
                         {/* Páginas dos botões de dentro do menu central  */}
-                        {profileMenuItem === "registerEntity" && <EntityRegister />}
-                        {profileMenuItem === "registerSupply" && <SupplyRegister />}
+                        {profileMenuItem === "registerEntity" && <EntityRegister setProfileMenuItem={setProfileMenuItem} />}
+                        {profileMenuItem === "registerSupply" && <SupplyRegister setProfileMenuItem={setProfileMenuItem} />}
                         {profileMenuItem === "confirmDonations" && <ActiveDonationsList />}
                     </div>
                 </div>

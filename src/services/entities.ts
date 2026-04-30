@@ -18,6 +18,11 @@ export const createEntity = async (data: Entity) => {
   return response.data;
 };
 
+export const getEntities = async () => {
+  const response = await api.get("/entities");
+  return response.data;
+};
+
 export const getEntitiesByShelter = async() =>{
   const response = await api.get('/entities/private');
   return response.data;

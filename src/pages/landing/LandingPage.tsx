@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import "./LandingPage.scss";
 import FinalCTA from "./FinalCTA";
 import NavBar from "./Navbar";
@@ -15,12 +15,10 @@ import Footer from "./Footer";
 export interface MissingPerson {
   id: string;
   name: string;
-  age: number;
-  lastSeen: string;
+  estimated_age: number | null;
+  species: string | null;
   description: string;
-  photo?: string;
-  status: "missing" | "found";
-  contact: string;
+  status: "in_shelter" | "looking_for_family" | "reunited" | "released";
 }
 
 export interface Shelter {

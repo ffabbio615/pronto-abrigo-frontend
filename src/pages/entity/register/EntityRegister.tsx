@@ -5,7 +5,16 @@ import useAlertStore from "../../../store/useAlertStore";
 import { createEntity } from "../../../services/entities";
 import type {Entity} from "../../../services/entities";
 
-export default function EntityRegister() {
+type Props = {
+  setProfileMenuItem: React.Dispatch<
+    React.SetStateAction<
+      "default" | "updateShelter" | "getSupplies" | "getEntities" | "getDonations" | 
+      "registerEntity" | "registerSupply" | "confirmDonations"
+    >
+  >;
+};
+
+export default function EntityRegister({ setProfileMenuItem }: Props) {
 
     const { setLocalLoader } = useStore();
     const { alert } = useAlertStore();
@@ -170,7 +179,10 @@ export default function EntityRegister() {
                 <option value="looking_for_family">Esperando por família</option>
             </select>
 
-            <button type="submit">Cadastrar</button>
+            <div className='entity-register-buttons-container'>
+                <button onClick={() => setProfileMenuItem("default")} type="button">Cancelar</button>
+                <button type="submit">Cadastrar</button>
+            </div>
 
         </form>
         </div>

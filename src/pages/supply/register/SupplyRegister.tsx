@@ -4,7 +4,16 @@ import useStore from '../../../store/useStore';
 import useAlertStore from "../../../store/useAlertStore";
 import { createSupply } from "../../../services/supplies";
 
-export default function SupplyRegister() {
+type Props = {
+  setProfileMenuItem: React.Dispatch<
+    React.SetStateAction<
+      "default" | "updateShelter" | "getSupplies" | "getEntities" | "getDonations" | 
+      "registerEntity" | "registerSupply" | "confirmDonations"
+    >
+  >;
+};
+
+export default function SupplyRegister({ setProfileMenuItem }: Props) {
 
     const { alert } = useAlertStore();
     const { setLocalLoader } = useStore();
@@ -104,7 +113,10 @@ export default function SupplyRegister() {
                 <label htmlFor="current_quantity">Quantidade atual:</label>
                 <input id="current_quantity" className={errors.current_quantity ? "error" : ""} type="number" name="current_quantity" value={form.current_quantity} onChange={handleChange} />
 
-                <button type="submit">Cadastrar</button>
+                <div className='supply-register-buttons-container'>
+                    <button onClick={() => setProfileMenuItem("default")} type="button">Cancelar</button>
+                    <button type="submit">Cadastrar</button>
+                </div>
 
             </form>
         </div>
