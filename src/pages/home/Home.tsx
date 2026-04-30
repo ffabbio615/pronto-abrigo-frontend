@@ -11,6 +11,7 @@ import SupplyRegister from '../supply/register/SupplyRegister';
 import DonationsList from '../donation/get/DonationsList';
 import ActiveDonationsList from '../donation/put/ActiveDonationsList';
 import EntityRegister from '../entity/register/EntityRegister';
+import EntityUpdate from '../entity/update/EntityUpdate';
 
 export default function Home() {
 
@@ -104,7 +105,7 @@ export default function Home() {
 
                         {/* Páginas dos botões de dentro do menu lateral  */}
                         {profileMenuItem === "updateShelter" && shelter && <ShelterUpdate shelter={shelter} />}
-                        {profileMenuItem === "getEntities" && <p>Acolhidos</p>}
+                        {profileMenuItem === "getEntities" && <EntityUpdate />}
                         {profileMenuItem === "getSupplies" && <SupplyUpdate />}
                         {profileMenuItem === "getDonations" && <DonationsList />}
 

@@ -1,4 +1,4 @@
-/* ─── Design Tokens ─────────────────────────────────────────────────────────── */
+@use '../../App.scss' as *;
 
 :root {
   /* Brand palette */
@@ -50,7 +50,9 @@
 html { scroll-behavior: smooth; font-size: 16px; }
 
 body {
-  font-family: 'Georgia', 'Times New Roman', serif;
+  // font-family: 'Georgia', 'Times New Roman', serif;
+  font-family: 'Lato';
+  src: url('/fonts/Lato-BoldItalic.ttf') format('truetype');
   background: var(--off-white);
   color: var(--black);
   line-height: 1.6;
@@ -66,7 +68,9 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 /* ─── Typography Scale ───────────────────────────────────────────────────────── */
 
 h1, h2, h3, h4 {
-  font-family: 'Georgia', serif;
+  // font-family: 'Georgia', serif;
+  font-family: 'Lato';
+  src: url('/fonts/Lato-BoldItalic.ttf') format('truetype');
   font-weight: 700;
   line-height: 1.15;
   letter-spacing: -0.02em;
@@ -95,12 +99,13 @@ h1, h2, h3, h4 {
 
 .section-tag {
   display: inline-block;
-  font-family: 'Courier New', monospace;
-  font-size: 11px;
-  font-weight: 700;
+  @include font-config($fextraBold, 11px, $fnormal, $neutral-color-dark-gray, 1);
+  // font-family: 'Courier New', monospace;
+  // font-size: 11px;
+  // font-weight: 700;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--teal);
+  // color: var(--teal);
   background: rgba(0, 100, 110, 0.08);
   padding: 5px 14px;
   border-radius: 100px;
@@ -197,9 +202,10 @@ h1, h2, h3, h4 {
   display: inline-block;
   padding: 4px 12px;
   border-radius: 100px;
-  font-size: 12px;
-  font-weight: 700;
-  font-family: 'Courier New', monospace;
+  // font-size: 12px;
+  // font-weight: 700;
+  // font-family: 'Courier New', monospace;
+  @include font-config($fextraBold, 12px, $fnormal, $neutral-color-dark-gray, 0);
   letter-spacing: 0.05em;
   text-transform: uppercase;
   margin-bottom: 8px;
@@ -265,9 +271,10 @@ h1, h2, h3, h4 {
 
 .navbar {
   position: fixed;
+  // background: rgba(0, 50, 55, 0.97);
   top: 0; left: 0; right: 0;
   z-index: 100;
-  padding: 20px 0;
+  padding: 8px 0;
   transition: all 0.3s ease;
 }
 
@@ -298,6 +305,7 @@ h1, h2, h3, h4 {
 .navbar__logo-icon { font-size: 22px; }
 .navbar__logo-text { color: white; }
 .navbar__logo-text strong { color: var(--yellow-bright); }
+.navbar__logo-image{height: 100px;}
 
 .navbar__links {
   display: flex;
@@ -493,11 +501,12 @@ h1, h2, h3, h4 {
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  color: rgba(255,255,255,0.35);
-  font-size: 11px;
+  @include font-config($fregular, 11px, $fnormal, $neutral-color-white, 0.5);
+  // color: rgba(255,255,255,0.35);
+  // font-family: 'Courier New', monospace;
+  // font-size: 11px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  font-family: 'Courier New', monospace;
 }
 
 .hero__scroll-arrow {

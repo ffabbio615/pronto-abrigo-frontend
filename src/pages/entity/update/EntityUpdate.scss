@@ -1,0 +1,237 @@
+@use "../../../App.scss" as *;
+
+.entity-update-main-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .entity-title-container{
+        @include vertical-align(100%, 120px, 0);
+        flex-wrap: wrap;
+        position: sticky;
+        padding-block: 12px;
+        top: 0;
+        background-color: $neutral-color-white;
+        
+        h2{
+            text-align: center;
+            @include font-config($fextraBold, $f42px, $fnormal, $neutral-color-dark-gray, 1);
+            margin-bottom: 12px;
+        }
+        p{
+            text-align: center;
+            @include font-config($fregular, 15px, $fnormal, $neutral-color-dark-gray, 1);
+        }
+    }
+
+    .filters-container{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 24px 24px 0 24px;
+        column-gap: 12px;
+
+        .name-filter-container{
+            width: 300px;
+        }
+
+        .birth-date-filter-container{
+            width: 200px;
+        }
+
+        .estimated-age-filter-container{
+            width: 200px;
+        }
+
+        .species-filter-container{
+            width: 200px;
+        }
+
+        .breed-filter-container{
+            width: 200px;
+        }
+
+        .description-filter-container{
+            width: 350px;
+        }
+        
+        div{
+
+            label{
+                width: 10%;
+                @include font-config($fbold, $f15px, $fnormal, $neutral-color-dark-gray, 1);
+            }
+    
+            input{
+                width: 100%;
+                height: 40px;
+                min-height: 40px;
+                line-height: 40px;
+                border: 2px solid $neutral-color-light-gray;
+                border-radius: 10px;
+                @include font-config($fbold, $f14px, $fnormal, $neutral-color-dark-gray, 1);
+                padding-left: 15px;
+                background-repeat: no-repeat;
+                
+                &::placeholder{
+                    @include font-config($fbold, $f14px, $fnormal, $neutral-color-light-gray, 1);
+                }
+            }
+        }
+    }
+
+    .entity-list{
+        width: 80%;
+        max-width: 1200px;
+        min-width: 1000px;
+        display: grid;
+        grid-template-columns: calc(33.33% - 12px) calc(33.33% - 12px) calc(33.333% - 12px);
+        column-gap: 12px;
+        row-gap: 36px;
+        justify-items: center;
+        align-content:start;
+        overflow-y: scroll;
+        margin-top: 24px;
+        padding: 36px 20px 20px 20px;
+
+        .entity-card{
+            width: 100%;
+            max-width: 300px;
+            background-color: $neutral-color-white;
+            padding: 12px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba($neutral-color-black, 0.3);
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+
+            &:hover{
+                transform: scale(1.05);
+            }
+
+            .card-header{
+                height: 200px;
+            }
+
+            .card-image{
+
+                img{
+                    width: 100%;
+                    height: 180px;
+                    object-fit: cover;
+                    border-radius: 15px;
+                }
+            }
+
+            .card-body{
+                display: flex;
+                flex-wrap: wrap;
+                row-gap: 4px;
+                margin-bottom: 12px;
+                padding-inline: 4px;
+
+
+                .name-age-container {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    width: 100%;
+                
+                    .name-icon {
+                        display: flex;
+                        align-items: center;
+                        gap: 8px; // espaço entre nome e ícone
+                    }
+
+                    .entity-name {
+                        @include font-config($fbold, $f18px, $fnormal, $neutral-color-dark-gray, 1);
+                    }
+
+                    img{
+                        width: 16px;
+                        height: 16px;
+                    }
+
+                    .entity-age {
+                        @include font-config($fbold, $f18px, $fnormal, $neutral-color-dark-gray, 1);
+                    }
+                }
+                
+                .animal-informations-container{
+                    display: flex;
+                    width: 100%;
+                    column-gap: 8px;
+
+                    .entity-species {
+                        @include font-config($fbold, $f18px, $fnormal, $neutral-color-dark-gray, 1);
+                    }
+                    
+                    .entity-breed {
+                        @include font-config($fbold, $f18px, $fnormal, $neutral-color-dark-gray, 1);
+                    }
+                }
+                
+                .entity-description {
+                    @include font-config($fregular, $f13px, $fnormal, $neutral-color-dark-gray, 1);
+                    text-align: justify;
+                }
+            }
+
+            .card-footer {
+                padding-inline: 4px;
+
+                div{
+                    display: flex;
+                    justify-content: space-between;
+                }
+                
+                .entity-register-date, .entity-exit-reason {
+                    @include font-config($fregular, $f14px, $fnormal, $neutral-color-dark-gray, 1);
+                    
+                    span{
+                        @include font-config($fbold, $f16px, $fnormal, $neutral-color-dark-gray, 1);
+                    }
+                }
+            
+                .entity-status {
+                    position: absolute;
+                    right: 12px;
+                    top: 28px;
+                    padding: 6px 8px 4px 8px;
+                    border-radius: 10px 0 0 10px;
+                    @include font-config($fextraBold, $f13px, $fnormal, $neutral-color-white, 1);
+                    text-transform: uppercase;
+                    display: flex;
+                    box-shadow: -5px 0 10px rgba($neutral-color-black, 0.2);
+            
+                  &.in_shelter {
+                    background-color: $secondary-color-blue8;
+                  }
+            
+                  &.looking_for_family {
+                    background-color: $supply-low-red;
+                  }
+            
+                  &.reunited {
+                    background-color: $supply-high-green;
+                  }
+            
+                  &.released {
+                    background-color: $supply-high-green;
+                  }
+            
+                }
+                
+                .entity-exit-reason {
+                    text-align: justify;
+                }
+            
+            
+            }
+            
+        }
+    }
+}
