@@ -10,7 +10,7 @@ export type Entity = {
     description: string,
     photo_url: string | null,
     allow_public_photo: boolean,
-    status: string
+    status: string,
 }
 
 export const createEntity = async (data: Entity) => {

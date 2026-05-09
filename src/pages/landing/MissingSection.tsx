@@ -32,7 +32,7 @@ export default function MissingSection() {
     setQuery(val);
 
     const filtered = people.filter((p) =>
-      p.name.toLowerCase().includes(val.toLowerCase())
+      (p.name ?? "").toLowerCase().includes(val.toLowerCase())
     );
 
     setFilteredPeople(filtered);
@@ -41,39 +41,20 @@ export default function MissingSection() {
   return (
     <section className="missing section section--dark" id="pessoas">
       <div className="container">
+
         <div className="section-header section-header--light">
-          <span className="section-tag section-tag--light">
-            Busca de pessoas
-          </span>
-
-          <h2 className="section-title">
-            Encontre quem você<br />está procurando
-          </h2>
-
-          <p className="section-desc">
-            Cada busca pode salvar uma vida. Pesquise por nome.
-          </p>
+          <span className="section-tag section-tag--light"> Busca de pessoas </span>
+          <h2 className="section-title">Encontre quem você<br />está procurando</h2>
+          <p className="section-desc">Cada busca pode salvar uma vida. Pesquise por nome.</p>
         </div>
 
         {/* SEARCH */}
         <div className="search-bar">
           <span className="search-bar__icon">🔍</span>
-
-          <input
-            type="text"
-            placeholder="Nome..."
-            value={query}
-            onChange={(e) => handleSearch(e.target.value)}
-            className="search-bar__input"
-          />
+          <input type="text" placeholder="Nome..." value={query} onChange={(e) => handleSearch(e.target.value)} className="search-bar__input" />
 
           {query && (
-            <button
-              className="search-bar__clear"
-              onClick={() => handleSearch("")}
-            >
-              ✕
-            </button>
+            <button className="search-bar__clear" onClick={() => handleSearch("")}>✕</button>
           )}
         </div>
 
@@ -87,44 +68,47 @@ export default function MissingSection() {
         ) : filteredPeople.length === 0 ? (
           <div className="empty-state">
             <span>🔍</span>
-            <p>
-              Nenhuma pessoa encontrada para "<em>{query}</em>"
-            </p>
+            <p>Nenhuma pessoa encontrada ainda...</p>
           </div>
         ) : (
           <div className="missing__grid">
-            {filteredPeople.map((p) => (
-              <button
-                key={p.id}
-                className="person-card"
-                onClick={() => setSelected(p)}
-              >
-                {/* imagem temporária (mantida para layout) */}
-                <img
-                  src={`https://i.pravatar.cc/150?u=${p.id}`}
-                  alt={p.name}
-                  className="person-card__photo"
+            {filteredPeople.slice(0, 5).map((p) => (
+              <button key={p.id} className="person-card" onClick={() => setSelected(p)}>
+                <img className="person-card__photo" src={p.photo_url ? p.photo_url : p.type==="person" ? "./icon/personIcon.png" : "./icon/animalIcon.png"} 
+                  alt={p.name ? `Foto de ${p.name}` : "Foto do desabrigado"} 
                 />
 
                 <div className="person-card__info">
-                  <span
-                    className={`badge badge--${
-                      p.status === "looking_for_family"
-                        ? "red"
-                        : "green"
-                    } badge--sm`}
-                  >
-                    {p.status === "looking_for_family"
-                      ? "Em busca"
-                      : "Localizado"}
+                  <span className="badge badge--red badge--sm"> {p.status === "looking_for_family" ? "Em busca da família" : "Localizado"} </span>
+
+                  {p.type === "person" ?
+                  <>
+                    <div>
+                      <strong>{p.name ?? "Sem nome"}</strong>
+                      <strong>{" - Humano"}</strong>
+                    </div>
+
+                    <span> {`Idade estimada: ${p.estimated_age} ano(s)`} </span>
+                  </>
+                  :
+                  <>
+                    <div>
+                      <strong>{"Animal - "}</strong>
+                      <strong>{p.name ?? "Sem Nome"}</strong>
+                    </div>
+                    <div>
+                      <span>{p.species ?? "Espécie não informada"}</span>
+                      <span> {` | Idade estimada: ${p.estimated_age} ano(s)`} </span>
+                      <span>{p.breed ? ` | Raça: ${p.breed}` : " | Raça não informada"}</span>
+                    </div>
+                  </>
+                  }
+
+                  <span> {`Abrigado em: ${new Date(p.created_at)
+                    .toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'})
+                    .replace(',', ' às')}h`}
                   </span>
 
-                  <strong>{p.name}</strong>
-
-                  <span>
-                    {p.estimated_age ?? "Idade desconhecida"} anos ·{" "}
-                    {p.species ?? "Espécie não informada"}
-                  </span>
                 </div>
 
                 <span className="person-card__arrow">›</span>
@@ -136,7 +120,7 @@ export default function MissingSection() {
         {/* MODAL */}
         {selected && (
           <MissingPersonModal
-            person={selected}
+            entity={selected}
             onClose={() => setSelected(null)}
           />
         )}

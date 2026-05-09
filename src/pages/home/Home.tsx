@@ -95,8 +95,8 @@ export default function Home() {
                         {profileMenuItem === "default" && 
                             <div className='home-menu-container'>
                                 <div className='home-title-container'>
-                                    <h1>Editar dados do Abrigo</h1>
-                                    <p>Preencha os campos abaixo para editar os dados do seu abrigo.</p>
+                                    <h1>Sistema Pronto Abrigo</h1>
+                                    <p>Utilize o menu abaixo e o painel lateral para realizar alguma ação.</p>
                                 </div>
                                 <div className='buttons-container'>
                                     <button className='menu-card' onClick={()=> { setLocalLoader(true);  setProfileMenuItem("registerEntity"); }}>

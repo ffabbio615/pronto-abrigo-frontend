@@ -55,10 +55,8 @@ export default function EntityRegister({ setProfileMenuItem }: Props) {
     const validate = () => {
         const newErrors: Record<string, string> = {};
 
-        if (!form.name) newErrors.name = "Nome é obrigatório";
-
-        if (!form.birth_date && !form.estimated_age) {
-        newErrors.birth_date = "Informe data de nascimento ou idade estimada";
+        if (!form.estimated_age) {
+        newErrors.birth_date = "Informe a idade estimada, mesmo se possuir a data de nascimento";
         }
 
         if (isAnimal && !form.species) {
@@ -70,7 +68,7 @@ export default function EntityRegister({ setProfileMenuItem }: Props) {
     };
 
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.SubmitEvent) => {
         e.preventDefault();
 
         if (!validate()) {
@@ -83,8 +81,10 @@ export default function EntityRegister({ setProfileMenuItem }: Props) {
 
         const dataToSend: Entity = {
             ...form,
-            species: isAnimal ? form.species : null,
-            breed: isAnimal ? form.breed : null,
+            name: form.name || null,
+            birth_date: form.birth_date || null,
+            species: isAnimal ? form.species || null : null,
+            breed: isAnimal ? form.breed || null : null,
             photo_url: form.allow_public_photo ? form.photo_url : null
         };
 
@@ -129,7 +129,7 @@ export default function EntityRegister({ setProfileMenuItem }: Props) {
                 <option value="animal">Animal</option>
             </select>
 
-            <label htmlFor="name"><span>*</span>Nome:</label>
+            <label htmlFor="name">Nome:</label>
             <input className={errors.name ? "error" : ""} id="name" name="name" value={form.name} onChange={handleChange} placeholder={isAnimal ? "Ex.: Thor" : "Ex.: João da Silva"} />
 
             <div className='birth-container'>

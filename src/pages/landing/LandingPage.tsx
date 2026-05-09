@@ -14,11 +14,16 @@ import Footer from "./Footer";
 
 export interface MissingPerson {
   id: string;
+  shelter_id: string;
+  type: "person" | "animal";
   name: string;
   estimated_age: number | null;
   species: string | null;
+  breed: string | null;
   description: string;
   status: "in_shelter" | "looking_for_family" | "reunited" | "released";
+  photo_url: string | null;
+  created_at: string;
 }
 
 export interface Shelter {

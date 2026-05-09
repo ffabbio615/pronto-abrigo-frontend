@@ -19,6 +19,10 @@ export const registerShelter = async (data: RegisterData) => {
   return response.data;
 };
 
+export const getShelterById = async (shelter_id) => {
+  const response = await api.get(`/shelters/${shelter_id}`);
+  return response.data;
+};
 
 export const getMyShelter = async () => {
   const response = await api.get("/shelters/me");
