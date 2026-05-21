@@ -5,10 +5,10 @@ export type Entity = {
     name: string | null,
     birth_date: string | null,
     estimated_age: string,
-    species?: string | null,
-    breed?: string | null,
+    species: string | null,
+    breed: string | null,
     description: string,
-    photo_url?: string | null,
+    photo_url: string | null,
     allow_public_photo: boolean,
     status: string,
 }

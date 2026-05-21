@@ -70,15 +70,15 @@ export default function EntityRegister({ setProfileMenuItem }: Props) {
 
     const handleSubmit = async (e: React.SubmitEvent) => {
         e.preventDefault();
+        setLocalLoader(true);
 
         if (!validate()) {
         await alert("Preencha os campos obrigatórios!");
+        setTimeout(()=> setLocalLoader(false), 300);
         return;
         }
 
         try {
-        setLocalLoader(true);
-
         const dataToSend: Entity = {
             ...form,
             species: isAnimal ? form.species : null,
@@ -92,13 +92,13 @@ export default function EntityRegister({ setProfileMenuItem }: Props) {
 
         setForm({
             type: "person",
-            name: null,
-            birth_date: null,
+            name: "",
+            birth_date: "",
             estimated_age: "",
-            species: null,
-            breed: null,
+            species: "",
+            breed: "",
             description: "",
-            photo_url: null,
+            photo_url: "",
             allow_public_photo: false,
             status: "in_shelter"
         });
@@ -113,76 +113,75 @@ export default function EntityRegister({ setProfileMenuItem }: Props) {
 
     return (
         <div className="entity-register-container">
-
-        <div className="entity-title-container">
-            <h2>Cadastrar Desabrigado</h2>
-            <p>Preencha os dados do desabrigado abaixo</p>
-        </div>
-
-        <form onSubmit={handleSubmit}>
-
-            <label htmlFor="type">Tipo:</label>
-            <select id="type" name="type" value={form.type} onChange={handleChange}>
-                <option value="person">Pessoa</option>
-                <option value="animal">Animal</option>
-            </select>
-
-            <label htmlFor="name">Nome:</label>
-            <input className={errors.name ? "error" : ""} id="name" name="name" value={form.name} onChange={handleChange} placeholder={isAnimal ? "Ex.: Thor" : "Ex.: João da Silva"} />
-
-            <div className='birth-container'>
-                <div>
-                    <label htmlFor="birth_date">Data de nascimento:</label>
-                    <input id="birth_date" type="date" name="birth_date" value={form.birth_date} onChange={handleChange} />
-                </div>
-                <p>ou</p>
-                <div>
-                    <label htmlFor="estimated_age">Idade estimada:</label>
-                    <input id="estimated_age" type="number" name="estimated_age" value={form.estimated_age} onChange={handleChange} placeholder="Somente número. Ex.: 5"/>
-                </div>
+            <div className="entity-title-container">
+                <h2>Cadastrar Desabrigado</h2>
+                <p>Preencha os dados do desabrigado abaixo</p>
             </div>
 
-            {isAnimal && (
-            <>
-                <label htmlFor="species"><span>*</span>Espécie:</label>
-                <input className={errors.species ? "error" : ""} id="species" name="species" value={form.species} onChange={handleChange} placeholder="Ex.: Cachorro, Gato" />
+            <form onSubmit={handleSubmit}>
 
-                <label htmlFor="breed">Raça:</label>
-                <input id="breed" name="breed" value={form.breed} onChange={handleChange} placeholder="Ex.: Poodle, SRD" />
-            </>
-            )}
+                <label htmlFor="type">Tipo:</label>
+                <select id="type" name="type" value={form.type} onChange={handleChange}>
+                    <option value="person">Pessoa</option>
+                    <option value="animal">Animal</option>
+                </select>
 
-            <label htmlFor="description">Descrição:</label>
-            <input id="description" name="description" value={form.description} onChange={handleChange} 
-            placeholder={isAnimal ? "Animal cor caramelo, cauda encaracolada, dócil e saudável" : "Ex.: Cabelos brancos, óculos, dificuldade de fala e locomoção"} />
+                <label htmlFor="name">Nome:</label>
+                <input className={errors.name ? "error" : ""} id="name" name="name" value={form.name} onChange={handleChange} placeholder={isAnimal ? "Ex.: Thor" : "Ex.: João da Silva"} />
 
-            <label className="public-photo-checkbox" htmlFor="allow_public_photo">
-                <input id="allow_public_photo" type="checkbox" name="allow_public_photo" checked={form.allow_public_photo} onChange={handleChange} /> Permitir foto pública
-            </label>
+                <div className='birth-container'>
+                    <div>
+                        <label htmlFor="birth_date">Data de nascimento:</label>
+                        <input id="birth_date" type="date" name="birth_date" value={form.birth_date} onChange={handleChange} />
+                    </div>
+                    <p>ou</p>
+                    <div>
+                        <label htmlFor="estimated_age">Idade estimada:</label>
+                        <input id="estimated_age" type="number" name="estimated_age" value={form.estimated_age} onChange={handleChange} placeholder="Somente número. Ex.: 5"/>
+                    </div>
+                </div>
 
-            {form.allow_public_photo && (
-            <>
-                <label htmlFor="photo_url">URL da foto:</label>
-                <input id="photo_url" name="photo_url" value={form.photo_url} onChange={handleChange} placeholder="Cole o link da imagem" />
+                {isAnimal && (
+                <>
+                    <label htmlFor="species"><span>*</span>Espécie:</label>
+                    <input className={errors.species ? "error" : ""} id="species" name="species" value={form.species} onChange={handleChange} placeholder="Ex.: Cachorro, Gato" />
 
-                {form.photo_url && (
-                    <img src={form.photo_url} alt="Miniatura da foto do acolhido" style={{ width: 150, marginTop: 10 }} />
+                    <label htmlFor="breed">Raça:</label>
+                    <input id="breed" name="breed" value={form.breed} onChange={handleChange} placeholder="Ex.: Poodle, SRD" />
+                </>
                 )}
-            </>
-            )}
 
-            <label htmlFor="status">Status:</label>
-            <select id="status" name="status" value={form.status} onChange={handleChange}>
-                <option value="in_shelter">Abrigado</option>
-                <option value="looking_for_family">Esperando por família</option>
-            </select>
+                <label htmlFor="description">Descrição:</label>
+                <input id="description" name="description" value={form.description} onChange={handleChange} 
+                placeholder={isAnimal ? "Animal cor caramelo, cauda encaracolada, dócil e saudável" : "Ex.: Cabelos brancos, óculos, dificuldade de fala e locomoção"} />
 
-            <div className='entity-register-buttons-container'>
-                <button onClick={() => setProfileMenuItem("default")} type="button">Cancelar</button>
-                <button type="submit">Cadastrar</button>
-            </div>
+                <label className="public-photo-checkbox" htmlFor="allow_public_photo">
+                    <input id="allow_public_photo" type="checkbox" name="allow_public_photo" checked={form.allow_public_photo} onChange={handleChange} /> Permitir foto pública
+                </label>
 
-        </form>
+                {form.allow_public_photo && (
+                <>
+                    <label htmlFor="photo_url">URL da foto:</label>
+                    <input id="photo_url" name="photo_url" value={form.photo_url} onChange={handleChange} placeholder="Cole o link da imagem" />
+
+                    {form.photo_url && (
+                        <img src={form.photo_url} alt="Miniatura da foto do acolhido" style={{ width: 150, marginTop: 10 }} />
+                    )}
+                </>
+                )}
+
+                <label htmlFor="status">Status:</label>
+                <select id="status" name="status" value={form.status} onChange={handleChange}>
+                    <option value="in_shelter">Abrigado</option>
+                    <option value="looking_for_family">Esperando por família</option>
+                </select>
+
+                <div className='entity-register-buttons-container'>
+                    <button onClick={() => setProfileMenuItem("default")} type="button">Cancelar</button>
+                    <button type="submit">Cadastrar</button>
+                </div>
+
+            </form>
         </div>
     );
 }
