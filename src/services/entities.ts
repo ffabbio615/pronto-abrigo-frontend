@@ -2,13 +2,13 @@ import { api } from "./api";
 
 export type Entity = {
     type: string,
-    name: string,
-    birth_date: string,
+    name: string | null,
+    birth_date: string | null,
     estimated_age: string,
     species?: string | null,
     breed?: string | null,
     description: string,
-    photo_url: string | null,
+    photo_url?: string | null,
     allow_public_photo: boolean,
     status: string,
 }
