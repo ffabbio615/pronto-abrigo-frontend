@@ -17,6 +17,20 @@ export const getSupplies = async () => {
   return response.data;
 };
 
+//lista pública de abrigos próximos ao endereço informado, para que possam fazer doações mais direcionadas
+//envia latitude, longitude e o raio de distância em quilômetros, definido por padrão como 10km.
+export const getNearbySupplies = async (latitude: number, longitude: number, radius = 10) => {
+  const response = await api.get("/supplies/nearby", {
+    params: {
+      lat: latitude,
+      lng: longitude,
+      radius
+    }
+  });
+
+  return response.data;
+}
+
 export const updateSupply = async (id: number, item: Supply) => {
   const response = await api.put(`/supplies/${id}`, item);
   return response.data;

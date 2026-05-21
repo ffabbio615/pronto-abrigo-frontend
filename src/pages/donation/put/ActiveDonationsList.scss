@@ -122,12 +122,12 @@
             }
           }
 
-          .card-confirmation{
+          .confirmation-card{
             width: 100%;
             display: flex;
             justify-content: center;
 
-            button{
+            .confirmation-card-button{
                 width: 180px;
                 height: 36px;
                 border-radius: 8px;
@@ -135,7 +135,7 @@
                 @include font-config($fsemiBold, 16px, $fnormal, $neutral-color-white, 1);
                 transition: background-color 0.3s ease;
 
-                :hover{
+                &:hover{
                     background-color: $supply-high-green-emphasis;
                 }
             }

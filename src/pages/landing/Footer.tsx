@@ -26,7 +26,7 @@ export default function Footer() {
             </div>
             </div>
             <div className="footer__bottom">
-            <p>© 2024 Pronto Abrigo. Feito com urgência e cuidado para o povo brasileiro.</p>
+            <p>© 2026 Pronto Abrigo. Último desafio Fullstack para o curso Kodie Academy, desenvolvido por Fábio Marques.</p>
             </div>
         </footer>
     );

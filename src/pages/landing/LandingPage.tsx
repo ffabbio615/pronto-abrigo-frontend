@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import "./LandingPage.scss";
+import useStore from '../../store/useStore';
 import FinalCTA from "./FinalCTA";
 import NavBar from "./Navbar";
 import HeroSection from "./HeroSection";
@@ -24,29 +25,44 @@ export interface MissingPerson {
   status: "in_shelter" | "looking_for_family" | "reunited" | "released";
   photo_url: string | null;
   created_at: string;
-}
+};
 
 export interface Shelter {
-  id: string;
-  name: string;
-  address: string;
-  city: string;
-  status: "open" | "closed" | "full";
-  capacity: number;
-  occupancy: number;
-  phone: string;
-  needs: string[];
-  coordinates: { lat: number; lng: number };
-}
+    id: string;
+    name: string;
+    nickname: string;
+    description: string;
+    address: string;
+    latitude: number | null;
+    longitude: number | null;
+    type: "human" | "animal";
+    status: "open" | "full" | "closed";
+    capacity: number;
+    current_occupancy: number;
+    photo_url: string | null;
+};
 
 export interface Supply {
-  id: string;
-  name: string;
-  category: string;
-  urgency: "critical" | "high" | "medium";
-  shelter: string;
-  distance: string;
-}
+  shelter_id: number;
+  shelter_name: string;
+  shelter_address: string;
+  distance: number;
+  items: {
+    id: number;
+    name: string;
+    current: number;
+    needed: number;
+    ideal: number;
+  }[];
+};
+
+export interface Donation {
+    id: number;
+    name: string;
+    current: number;
+    needed: number;
+    ideal: number;
+};
 
 export interface Story {
   id: string;
@@ -54,7 +70,7 @@ export interface Story {
   location: string;
   quote: string;
   detail: string;
-}
+};
 
 export interface WeatherAlert {
   id: string;
@@ -62,20 +78,30 @@ export interface WeatherAlert {
   severity: "extreme" | "severe" | "moderate";
   area: string;
   issued: string;
-}
+};
 
 export default function LandingPage() {
+
+  const { setLoader } = useStore();
+  
   useEffect(() => {
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener("click", (e) => {
-        const href = (a as HTMLAnchorElement).getAttribute("href");
-        if (href && href !== "#") {
-          e.preventDefault();
-          document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
-        }
-      });
-    });
-  }, []);
+    setLoader(true);
+    setTimeout(() => {
+      setLoader(false);
+    }, 2000);
+  }, [setLoader]);
+
+  // useEffect(() => {
+  //   document.querySelectorAll('a[href^="#"]').forEach(a => {
+  //     a.addEventListener("click", (e) => {
+  //       const href = (a as HTMLAnchorElement).getAttribute("href");
+  //       if (href && href !== "#") {
+  //         e.preventDefault();
+  //         document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+  //       }
+  //     });
+  //   });
+  // }, []);
 
   return (
     <div className="landing">

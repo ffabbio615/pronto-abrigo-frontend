@@ -19,7 +19,7 @@ export default function MissingSection() {
         setPeople(data);
         setFilteredPeople(data);
       } catch (error) {
-        console.error("Erro ao buscar entities:", error);
+        console.error("Erro ao buscar os abrigados:", error);
       } finally {
         setLoading(false);
       }

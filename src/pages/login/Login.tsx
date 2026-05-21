@@ -57,7 +57,7 @@ export default function Login() {
                     <p>Novo por aqui? <Link to="/shelter/register" className='login-form-link'>Cadastre seu abrigo</Link></p>
                 </div>
                 <div className='login-form-logo-img'>
-                    <img src='/img/prontoAbrigoLogo.png' alt='Logo do Pronto Abrigo' />
+                    <img src='/img/prontoAbrigoLogo.png' alt='Logo do Pronto Abrigo' onClick={()=> navigate("/")} />
                 </div>
             </form>
         </div>

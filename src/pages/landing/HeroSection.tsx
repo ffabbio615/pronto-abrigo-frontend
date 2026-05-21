@@ -27,9 +27,6 @@ export default function HeroSection() {
                 <a href="#doacoes" className="btn btn--lg btn--white">
                 <span>📦</span> Doar mantimentos
                 </a>
-                {/* <a href="#abrigos" className="btn btn--lg btn--outline">
-                <span>🏠</span> Cadastrar abrigo
-                </a> */}
                 <Link className="btn btn--lg btn--yellow" to={"/login"}>🏠 Cadastrar abrigo</Link>
             </div>
             <div className="hero__stats">

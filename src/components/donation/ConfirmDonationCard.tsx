@@ -64,8 +64,8 @@ export default function ConfirmDonationCard({ donation, onConfirmSuccess }: { do
         </div>
       </div>
 
-      <div className="card-confirmation">
-        <button onClick={handleConfirm}>Confirmar Doação</button>
+      <div className="confirmation-card">
+        <button className='confirmation-card-button' onClick={handleConfirm}>Confirmar Doação</button>
       </div>
 
     </div>

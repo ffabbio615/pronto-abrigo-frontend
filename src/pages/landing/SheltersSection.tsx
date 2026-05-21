@@ -1,22 +1,30 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './LandingPage.scss';
+import { Link } from 'react-router-dom';
 import type { Shelter } from './LandingPage';
 import ShelterModal from './ShelterModal';
 import ShelterCard from './ShelterCard';
+import { getAllShelters } from '../../services/shelters';
 
 export default function SheltersSection() {
 
-    const MOCK_SHELTERS: Shelter[] = [
-      { id: "1", name: "Ginásio Municipal Décio Dall'Agnol", address: "Rua dos Andradas, 1234", city: "Porto Alegre", status: "open", capacity: 400, occupancy: 280, phone: "(51) 3211-1234", needs: ["água", "fraldas", "colchões"], coordinates: { lat: -30.03, lng: -51.22 } },
-      { id: "2", name: "CEFET-RS Unidade Porto Alegre", address: "Av. Farrapos, 8888", city: "Porto Alegre", status: "open", capacity: 250, occupancy: 210, phone: "(51) 3211-5678", needs: ["alimentos", "remédios"], coordinates: { lat: -30.01, lng: -51.20 } },
-      { id: "3", name: "Arena do Grêmio", address: "Av. Padre Leopoldo Brentano, 110", city: "Porto Alegre", status: "full", capacity: 800, occupancy: 800, phone: "(51) 3011-2222", needs: ["tudo"], coordinates: { lat: -29.97, lng: -51.18 } },
-      { id: "4", name: "Escola Estadual Dr. Rodrigues", address: "Rua Independência, 456", city: "Canoas", status: "open", capacity: 180, occupancy: 95, phone: "(51) 3475-9999", needs: ["roupas", "água"], coordinates: { lat: -29.92, lng: -51.18 } },
-      { id: "5", name: "Centro Comunitário São José", address: "Rua XV de Novembro, 789", city: "São Leopoldo", status: "closed", capacity: 120, occupancy: 0, phone: "(51) 3568-7777", needs: [], coordinates: { lat: -29.76, lng: -51.14 } },
-    ];
+    const [shelter, setShelter] = useState<Shelter[]>([]);
+    useEffect(()=>{
+        async function loadShelters(){
+            try{
+                const data = await getAllShelters();
+                setShelter(data);
+            } catch(error){
+                console.error("Erro ao buscar os abrigos:", error);
+            }
+        }
+
+        loadShelters();
+    },[]);
 
     const [selected, setSelected] = useState<Shelter | null>(null);
     const [filter, setFilter] = useState<"all" | "open">("all");
-    const visible = filter === "all" ? MOCK_SHELTERS : MOCK_SHELTERS.filter(s => s.status === "open");
+    const visible = filter === "all" ? shelter : shelter.filter(s => s.status === "open");
 
     return (
         <section className="shelters section" id="abrigos">
@@ -27,8 +35,8 @@ export default function SheltersSection() {
             <p className="section-desc">Encontre onde buscar acolhimento ou como contribuir com um abrigo próximo.</p>
             </div>
             <div className="filter-bar">
-            <button className={`filter-btn ${filter === "all" ? "active" : ""}`} onClick={() => setFilter("all")}>Todos ({MOCK_SHELTERS.length})</button>
-            <button className={`filter-btn ${filter === "open" ? "active" : ""}`} onClick={() => setFilter("open")}>Abertos ({MOCK_SHELTERS.filter(s => s.status === "open").length})</button>
+            <button className={`filter-btn ${filter === "all" ? "active" : ""}`} onClick={() => setFilter("all")}>Todos ({shelter.length})</button>
+            <button className={`filter-btn ${filter === "open" ? "active" : ""}`} onClick={() => setFilter("open")}>Abertos ({shelter.filter(s => s.status === "open").length})</button>
             </div>
             <div className="shelters__grid">
             {visible.map(s => (
@@ -36,7 +44,7 @@ export default function SheltersSection() {
             ))}
             </div>
             <div className="shelters__footer">
-            <a href="#" className="btn btn--yellow">+ Cadastrar novo abrigo</a>
+                <Link to={"/login"} className="btn btn--yellow">+ Cadastrar novo abrigo</Link>
             </div>
         </div>
         {selected && <ShelterModal shelter={selected} onClose={() => setSelected(null)} />}
