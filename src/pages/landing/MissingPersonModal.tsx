@@ -22,7 +22,7 @@ export default function MissingPersonModal({ entity, onClose }: { entity: Missin
       const originLat = position.coords.latitude;
       const originLng = position.coords.longitude;
 
-      const shelter = await getShelterById(entity.shelter_id);
+      const shelter = await getShelterById(Number(entity.shelter_id));
 
       const destinationLat = shelter.latitude;
       const destinationLng = shelter.longitude;

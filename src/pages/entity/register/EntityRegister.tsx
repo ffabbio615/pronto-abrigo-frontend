@@ -23,15 +23,15 @@ export default function EntityRegister({ setProfileMenuItem }: Props) {
         setTimeout(()=> setLocalLoader(false), 1000);
     }, [setLocalLoader]);
 
-    const [form, setForm] = useState({
+    const [form, setForm] = useState<Entity>({
         type: "person",
-        name: "",
-        birth_date: "",
+        name: null,
+        birth_date: null,
         estimated_age: "",
-        species: "",
-        breed: "",
+        species: null,
+        breed: null,
         description: "",
-        photo_url: "",
+        photo_url: null,
         allow_public_photo: false,
         status: "in_shelter"
     });
@@ -81,10 +81,8 @@ export default function EntityRegister({ setProfileMenuItem }: Props) {
 
         const dataToSend: Entity = {
             ...form,
-            name: form.name || null,
-            birth_date: form.birth_date || null,
-            species: isAnimal ? form.species || null : null,
-            breed: isAnimal ? form.breed || null : null,
+            species: isAnimal ? form.species : null,
+            breed: isAnimal ? form.breed : null,
             photo_url: form.allow_public_photo ? form.photo_url : null
         };
 
@@ -94,13 +92,13 @@ export default function EntityRegister({ setProfileMenuItem }: Props) {
 
         setForm({
             type: "person",
-            name: "",
-            birth_date: "",
+            name: null,
+            birth_date: null,
             estimated_age: "",
-            species: "",
-            breed: "",
+            species: null,
+            breed: null,
             description: "",
-            photo_url: "",
+            photo_url: null,
             allow_public_photo: false,
             status: "in_shelter"
         });
