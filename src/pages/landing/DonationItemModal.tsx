@@ -24,7 +24,7 @@ export default function DonationItemModal({ donation, onClose, userAddress }: { 
             let origin: string;
 
             // USA ENDEREÇO DIGITADO
-            if (userAddress.trim()) {
+            if (userAddress.trim() && userAddress !== null) {
 
                 const response = await fetch(
                     `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(userAddress)}`

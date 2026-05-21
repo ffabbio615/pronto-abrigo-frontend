@@ -127,12 +127,12 @@ export default function EntityRegister({ setProfileMenuItem }: Props) {
                 </select>
 
                 <label htmlFor="name">Nome:</label>
-                <input className={errors.name ? "error" : ""} id="name" name="name" value={form.name} onChange={handleChange} placeholder={isAnimal ? "Ex.: Thor" : "Ex.: João da Silva"} />
+                <input className={errors.name ? "error" : ""} id="name" name="name" value={form.name ?? ""} onChange={handleChange} placeholder={isAnimal ? "Ex.: Thor" : "Ex.: João da Silva"} />
 
                 <div className='birth-container'>
                     <div>
                         <label htmlFor="birth_date">Data de nascimento:</label>
-                        <input id="birth_date" type="date" name="birth_date" value={form.birth_date} onChange={handleChange} />
+                        <input id="birth_date" type="date" name="birth_date" value={form.birth_date ?? ""} onChange={handleChange} />
                     </div>
                     <p>ou</p>
                     <div>
@@ -144,10 +144,10 @@ export default function EntityRegister({ setProfileMenuItem }: Props) {
                 {isAnimal && (
                 <>
                     <label htmlFor="species"><span>*</span>Espécie:</label>
-                    <input className={errors.species ? "error" : ""} id="species" name="species" value={form.species} onChange={handleChange} placeholder="Ex.: Cachorro, Gato" />
+                    <input className={errors.species ? "error" : ""} id="species" name="species" value={form.species ?? ""} onChange={handleChange} placeholder="Ex.: Cachorro, Gato" />
 
                     <label htmlFor="breed">Raça:</label>
-                    <input id="breed" name="breed" value={form.breed} onChange={handleChange} placeholder="Ex.: Poodle, SRD" />
+                    <input id="breed" name="breed" value={form.breed ?? ""} onChange={handleChange} placeholder="Ex.: Poodle, SRD" />
                 </>
                 )}
 
@@ -162,7 +162,7 @@ export default function EntityRegister({ setProfileMenuItem }: Props) {
                 {form.allow_public_photo && (
                 <>
                     <label htmlFor="photo_url">URL da foto:</label>
-                    <input id="photo_url" name="photo_url" value={form.photo_url} onChange={handleChange} placeholder="Cole o link da imagem" />
+                    <input id="photo_url" name="photo_url" value={form.photo_url ?? ""} onChange={handleChange} placeholder="Cole o link da imagem" />
 
                     {form.photo_url && (
                         <img src={form.photo_url} alt="Miniatura da foto do acolhido" style={{ width: 150, marginTop: 10 }} />
