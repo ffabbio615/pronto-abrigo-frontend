@@ -33,6 +33,13 @@ export default function Home() {
     const { setLocalLoader } = useStore();
     const [shelter, setShelter] = useState<UpdateData | null>(null);
     const { logout } = useAuthStore();
+    
+    useEffect(() => {
+        const token = useAuthStore.getState().token;
+        if (!token) {
+            logout();
+        }
+    }, [logout]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -60,31 +67,31 @@ export default function Home() {
                     
                     <button className={profileMenuItem === "default" ? 'active-page': ''} 
                     onClick={()=> { if(profileMenuItem !=="default") setLocalLoader(true); setTimeout(()=> setLocalLoader(false), 1000);  setProfileMenuItem("default"); }}>
-                        <img src='/icon/homeIcon.svg' alt='Ícone de mantimentos'/>Início
+                        <img src='/icon/homeIcon.svg' alt='Ícone do botão de início'/>Início
                     </button>
 
                     <button className={profileMenuItem === "updateShelter" ? 'active-page': ''} 
                     onClick={() => { if(profileMenuItem !=="updateShelter") setLocalLoader(true);  setProfileMenuItem("updateShelter"); }}>
-                        <img src='/icon/shelterEditIcon.svg' alt='Ícone de mantimentos'/> Editar Cadastro
+                        <img src='/icon/shelterEditIcon.svg' alt='Ícone do botão de editar cadastro'/> Editar Cadastro
                     </button>
 
                     <button className={profileMenuItem === "getEntities" ? 'active-page': ''} 
                     onClick={()=> { if(profileMenuItem !=="getEntities") setLocalLoader(true);  setProfileMenuItem("getEntities"); }}>
-                        <img src='/icon/entitiesIcon.svg' alt='Ícone de mantimentos'/> Acolhidos
+                        <img src='/icon/entitiesIcon.svg' alt='Ícone do botão de acolhidos'/> Acolhidos
                     </button>
 
                     <button className={profileMenuItem === "getSupplies" ? 'active-page': ''} 
                     onClick={()=> { if(profileMenuItem !=="getSupplies") setLocalLoader(true);  setProfileMenuItem("getSupplies"); }}>
-                        <img src='/icon/supplyIcon.svg' alt='Ícone de mantimentos'/> Mantimentos
+                        <img src='/icon/supplyIcon.svg' alt='Ícone do botão de mantimentos'/> Mantimentos
                     </button>
 
                     <button className={profileMenuItem === "getDonations" ? 'active-page': ''} 
                     onClick={()=> { if(profileMenuItem !=="getDonations") setLocalLoader(true);  setProfileMenuItem("getDonations"); }}>
-                        <img src='/icon/donationsIcon.svg' alt='Ícone de mantimentos'/> Doações
+                        <img src='/icon/donationsIcon.svg' alt='Ícone do botão de doações'/> Doações
                     </button>
 
                     <button onClick={logout}>
-                        <img src='/icon/logoutIcon.svg' alt='Ícone de mantimentos'/> Sair
+                        <img src='/icon/logoutIcon.svg' alt='Ícone do botão de sair do sistema'/> Sair
                     </button>
                 </div>
 
@@ -100,11 +107,11 @@ export default function Home() {
                                 </div>
                                 <div className='buttons-container'>
                                     <button className='menu-card' onClick={()=> { setLocalLoader(true);  setProfileMenuItem("registerEntity"); }}>
-                                        <img src='/icon/entitiesIcon.svg' alt='Ícone de mantimentos'/> Cadastrar Desabrigado</button>
+                                        <img src='/icon/entitiesIcon.svg' alt='Ícone do botão de cadastro de desabrigados'/> Cadastrar Desabrigado</button>
                                     <button className='menu-card' onClick={()=> { setLocalLoader(true);  setProfileMenuItem("registerSupply"); }}>
-                                        <img src='/icon/supplyIcon.svg' alt='Ícone de mantimentos'/> Cadastrar Mantimento</button>
+                                        <img src='/icon/supplyIcon.svg' alt='Ícone do botão de cadastro de mantimentos'/> Cadastrar Mantimento</button>
                                     <button className='menu-card' onClick={()=> { setLocalLoader(true);  setProfileMenuItem("confirmDonations"); }}>
-                                        <img src='/icon/donationsIcon.svg' alt='Ícone de mantimentos'/> Confirmar Doações</button>
+                                        <img src='/icon/donationsIcon.svg' alt='Ícone do botão de confirmar doações'/> Confirmar Doações</button>
                                     <button></button>
                                 </div>
                                     <img className='pronto-abrigo-logo' src='/img/prontoAbrigoLogo.png' alt='Logo Pronto Abrigo' />
