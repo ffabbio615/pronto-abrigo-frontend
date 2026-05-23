@@ -108,7 +108,6 @@ export default function WeatherSection() {
     
             const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${weatherApiKey}&q=${lat},${lon}&days=5&alerts=yes&aqi=no`);
             const data: Weather = await response.json();
-            console.log(data);
             return data;
         };
         
