@@ -916,6 +916,67 @@ h1, h2, h3, h4 {
 
 /* ─── WEATHER / ALERTS ───────────────────────────────────────────────────────── */
 
+.skeleton--weather {
+  position: relative;
+  width: 90%;
+  margin-left: 5%;
+  min-height: 350px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      rgba(255,255,255,0.03) 25%,
+      rgba(255,255,255,0.10) 50%,
+      rgba(255,255,255,0.03) 75%
+    );
+    background-size: 800px 100%;
+    animation: shimmer 1.5s infinite linear;
+    z-index: 1;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+
+    background:
+      /* título */
+      linear-gradient(rgba(255,255,255,0.08), rgba(255,255,255,0.08))
+      24px 24px / 180px 18px no-repeat,
+
+      /* alertas */
+      linear-gradient(rgba(255,255,255,0.06), rgba(255,255,255,0.06))
+      24px 64px / calc(100% - 48px) 70px no-repeat,
+
+      linear-gradient(rgba(255,255,255,0.06), rgba(255,255,255,0.06))
+      24px 146px / calc(100% - 48px) 70px no-repeat,
+
+      /* forecast */
+      linear-gradient(rgba(255,255,255,0.05), rgba(255,255,255,0.05))
+      24px 244px / calc((100% - 72px) / 5) 60px no-repeat,
+
+      linear-gradient(rgba(255,255,255,0.05), rgba(255,255,255,0.05))
+      calc(24px + ((100% - 72px) / 5) + 6px) 244px / calc((100% - 72px) / 5) 60px no-repeat,
+
+      linear-gradient(rgba(255,255,255,0.05), rgba(255,255,255,0.05))
+      calc(24px + (((100% - 72px) / 5) * 2) + 12px) 244px / calc((100% - 72px) / 5) 60px no-repeat,
+
+      linear-gradient(rgba(255,255,255,0.05), rgba(255,255,255,0.05))
+      calc(24px + (((100% - 72px) / 5) * 3) + 18px) 244px / calc((100% - 72px) / 5) 60px no-repeat,
+
+      linear-gradient(rgba(255,255,255,0.05), rgba(255,255,255,0.05))
+      calc(24px + (((100% - 72px) / 5) * 4) + 24px) 244px / calc((100% - 72px) / 5) 60px no-repeat;
+  }
+}
+
 .weather__layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -933,11 +994,18 @@ h1, h2, h3, h4 {
   overflow: hidden;
   border: 1px solid rgba(255,255,255,0.08);
   background: rgba(255,255,255,0.04);
+  transition: transform 0.3s ease;
+
+  &:hover{
+    transform: scale(1.05);
+    cursor: help;
+  }
 }
 
 .alert-card--extreme { border-color: rgba(180,45,45,0.4); }
 .alert-card--severe { border-color: rgba(200,110,20,0.35); }
 .alert-card--moderate { border-color: rgba(230,155,0,0.3); }
+.alert-card--normal { border-color: rgba(40, 230, 0, 0.3); }
 
 .alert-card__left {
   padding: 20px;
@@ -947,7 +1015,7 @@ h1, h2, h3, h4 {
   background: rgba(255,255,255,0.04);
 }
 
-.alert-card__icon { font-size: 28px; }
+.alert-card__icon { font-size: 20px; }
 
 .alert-card__body {
   flex: 1;
@@ -963,17 +1031,17 @@ h1, h2, h3, h4 {
 .alert-card__sev {
   padding: 0 16px;
   display: flex;
+  justify-content: center;
   align-items: center;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  font-family: 'Courier New', monospace;
+  @include font-config($fregular, $f10px, $fnormal, $neutral-color-dark-gray,1);
+  letter-spacing: 1px;
   writing-mode: vertical-rl;
   text-orientation: mixed;
 }
 .alert-card__sev--extreme { background: rgba(180,45,45,0.25); color: #ff8888; }
 .alert-card__sev--severe { background: rgba(200,110,20,0.2); color: #ffb566; }
 .alert-card__sev--moderate { background: rgba(230,155,0,0.15); color: #ffd966; }
+.alert-card__sev--normal { background: rgba(40, 230, 0,0.15); color: #66ff66; }
 
 .forecast-card {
   background: rgba(255,255,255,0.05);
@@ -983,12 +1051,10 @@ h1, h2, h3, h4 {
 }
 
 .forecast-card h3 {
-  font-size: 15px;
-  color: rgba(255,255,255,0.7);
-  font-weight: 400;
+  @include font-config($fregular, $f16px, $fnormal, $neutral-color-white,0.7);
+  line-height: 22px;
+  letter-spacing: 2px;
   margin-bottom: 24px;
-  font-family: 'Courier New', monospace;
-  letter-spacing: 0.04em;
 }
 
 .forecast__days {
@@ -1008,8 +1074,8 @@ h1, h2, h3, h4 {
 }
 .forecast__day:hover { background: rgba(255,255,255,0.05); }
 
-.forecast__label { font-size: 12px; color: rgba(255,255,255,0.5); font-family: 'Courier New', monospace; }
-.forecast__icon { font-size: 28px; }
+.forecast__label { @include font-config($fregular, $f12px, $fnormal, $neutral-color-white,0.5); }
+.forecast__icon { height: 36px; }
 .forecast__temp { font-size: 14px; color: white; font-weight: 700; }
 .forecast__temp em { font-style: normal; color: rgba(255,255,255,0.4); margin-left: 4px; font-weight: 400; }
 
@@ -1026,7 +1092,7 @@ h1, h2, h3, h4 {
   border-radius: 2px;
 }
 
-.forecast__rain-pct { font-size: 11px; color: var(--teal-bright); font-family: 'Courier New', monospace; }
+.forecast__rain-pct { @include font-config($fregular, $f11px, $fnormal, rgb(0, 165, 195),0.5); }
 
 /* ─── STORIES ────────────────────────────────────────────────────────────────── */
 

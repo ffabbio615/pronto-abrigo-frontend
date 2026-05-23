@@ -75,8 +75,8 @@ export interface Story {
 export interface WeatherAlert {
   id: string;
   title: string;
-  severity: "extreme" | "severe" | "moderate";
-  area: string;
+  severity: string;
+  number: string | number;
   issued: string;
 };
 
