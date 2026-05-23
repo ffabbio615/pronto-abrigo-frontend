@@ -1248,13 +1248,13 @@ h1, h2, h3, h4 {
   display: inline-block;
   background: rgba(255,195,75,0.15);
   border: 1px solid rgba(255,195,75,0.3);
-  color: var(--yellow-bright);
   font-size: 12px;
   font-weight: 700;
   font-family: 'Courier New', monospace;
+  color: var(--yellow-bright);
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  padding: 6px 16px;
+  padding: 8px 16px 4px 16px;
   border-radius: 100px;
   margin-bottom: 28px;
 }

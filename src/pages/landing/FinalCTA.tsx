@@ -6,7 +6,7 @@ export default function FinalCTA(){
         <section className="final-cta">
             <div className="final-cta__bg" />
             <div className="container final-cta__content">
-            <div className="final-cta__badge">🤝 Faça parte da mudança</div>
+            <div className="final-cta__badge">Faça parte da mudança</div>
             <h2 className="final-cta__title">
                 A reconstrução começa<br />com cada um de nós.
             </h2>
