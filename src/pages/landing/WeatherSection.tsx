@@ -79,7 +79,7 @@ export default function WeatherSection() {
 
     const [loading, setLoading] = useState(false);
     const [weather, setWeather] = useState<Weather | null>(null);
-    const weekDays = [];
+    const weekDays: string[] = [];
     
     const getWeekday = () =>{
         for (let i = 0; i < 5; i++) {
