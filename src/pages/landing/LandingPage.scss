@@ -981,7 +981,7 @@ h1, h2, h3, h4 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 32px;
-  align-items: start;
+  align-items: center;
 }
 
 .weather__alerts { display: flex; flex-direction: column; gap: 12px; }
@@ -1048,6 +1048,13 @@ h1, h2, h3, h4 {
   border: 1px solid rgba(255,255,255,0.08);
   border-radius: var(--radius-lg);
   padding: 28px;
+  transition: transform 0.3s ease;
+
+  &:hover{
+    transform: scale(1.05);
+    cursor: help;
+  }
+
 }
 
 .forecast-card h3 {
@@ -1570,12 +1577,12 @@ h1, h2, h3, h4 {
 }
 
 .footer__brand .navbar__logo-text { 
-  @include font-config($fbold, $f22px, $fnormal, $primary-color-blue,1); 
+  @include font-config($fbold, $f28px, $fnormal, $primary-color-blue,1); 
   display: block; 
   margin-bottom: 12px; 
   
   strong{ 
-    @include font-config($fbold, $f22px, $fnormal, $primary-color-yellow,1); 
+    @include font-config($fbold, $f28px, $fnormal, $primary-color-yellow,1); 
   }
 }
 .footer__brand p { font-size: 14px; color: rgba(255,255,255,0.4); max-width: 280px; line-height: 1.7; }
@@ -1645,7 +1652,40 @@ h1, h2, h3, h4 {
 
   .footer__inner { grid-template-columns: 1fr; gap: 32px; }
   .footer__links { justify-content: flex-start; }
+  .footer{
+    padding-top: 24px;
 
+    .footer__inner{
+
+      .footer__brand{
+
+        .navbar__logo-text { 
+          @include font-config($fbold, $f32px, $fnormal, $primary-color-blue,1);
+          text-align: center;
+          
+          strong{ 
+            @include font-config($fbold, $f32px, $fnormal, $primary-color-yellow,1); 
+          }
+        }
+        
+        p { max-width: calc(100% - 32px); text-align: center; margin-left: 16px; }
+      }
+
+      .footer__links{
+        max-width: calc(100% - 32px);
+        margin-left: 16px;
+        justify-content: space-evenly;
+        margin-bottom: 12px;
+
+        a{
+          font-size: 12px;
+        }
+      }
+
+    }
+
+  }
+  
   .hero__scroll-hint { display: none; }
 
   .modal { padding: 24px 20px; }
@@ -1659,4 +1699,92 @@ h1, h2, h3, h4 {
   .final-cta__buttons { flex-direction: column; }
   .loading-row { flex-direction: column; }
   .supplies-grid { grid-template-columns: 1fr !important; }
+
+  .container {
+    max-width: 100%;
+    padding: 0 16px;
+
+    .section-header{ margin-bottom: 24px; }
+
+    .weather__layout {
+      min-width: calc(100% - 32px);
+  
+      .weather__alerts {
+        max-width: 100%;
+    
+        .alert-card {
+          max-width: 100%;
+          transition: none;
+      
+          &:hover{
+            transform: scale(1);
+            cursor: auto;
+          }
+      
+          .alert-card__left {
+            padding: 8px;
+      
+            .alert-card__icon { font-size: 16px; }
+          }
+          
+          .alert-card__body {
+            padding: 12px 12px;
+      
+            strong { font-size: 14px; }
+            span { font-size: 11px; }
+            small { font-size: 10px; }
+          }
+          
+          .alert-card__sev {
+            padding: 0 12px;
+            letter-spacing: 1.5px;
+          }
+        }
+      }
+  
+      .weather__forecast{
+        min-width: calc(100% - 32px);
+  
+        .forecast-card {
+          padding: 20px;
+          transition: none;
+    
+          &:hover{
+            transform: scale(1);
+            cursor: auto;
+          }
+    
+          h3 {
+            @include font-config($fregular, $f16px, $fnormal, $neutral-color-white,0.7);
+            line-height: 22px;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+          }
+    
+          .forecast__days {
+            column-gap: 16px;
+            overflow-x: scroll;
+
+            &::-webkit-scrollbar {
+              // display: none;
+              height: 6px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .footer{
+    .footer__inner{
+      .footer__brand{
+        .navbar__logo-text { 
+          @include font-config($fbold, $f24px, $fnormal, $primary-color-blue,1);
+          
+          strong{ @include font-config($fbold, $f24px, $fnormal, $primary-color-yellow,1); }
+        }
+      }
+    }
+  }
+
 }
