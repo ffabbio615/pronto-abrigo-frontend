@@ -46,7 +46,7 @@ export default function Login() {
 
             <form className='login-form-container' onSubmit={handleSubmit}>
                 <div className='login-form-title-container'>
-                    <h1>BEM-VINDO AO <br></br> PRONTO ABRIGO!</h1>
+                    <h1>BEM-VINDO AO <br/> PRONTO ABRIGO!</h1>
                     <p>Seja a luz que guiará quem já perdeu tudo que tinha nas enchentes.</p>
                 </div>
                 <div className='login-form-inputs-container'>
