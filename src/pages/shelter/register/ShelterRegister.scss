@@ -6,12 +6,11 @@
 
     .register-foreground-container{
         width: 40%;
+        min-width: 600px;
         height: 90%;
         display: grid;
-        grid-template-rows: 120px 1fr;
-        min-width: 800px;
+        grid-template-rows: 1fr 1fr;
         background-color: $neutral-color-black;
-        border-radius: 30px;
         box-shadow: 0px 0px 30px rgba($neutral-color-black, 1);
         overflow: auto;
         position: relative;
@@ -24,11 +23,12 @@
             top: 0;
             left: 0;
             z-index: 2;
+            padding: 16px;
     
             h1{
                 text-align: center;
                 @include font-config($fextraBold, $f42px, $fnormal, $neutral-color-white, 1);
-                margin-bottom: 12px;
+                margin-bottom: 4px;
             }
             p{
                 text-align: center;
@@ -128,6 +128,8 @@
             
             .form-buttons-container{
                 display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
                 column-gap: 24px;
 
                 button:first-child{
@@ -158,4 +160,75 @@
         }
     }
 
+}
+
+@media (max-width: 768px) {
+    .main-register-container{
+
+        .background{
+            background-image: url("/img/homeBackground.png");
+            background-size: cover;
+            opacity: 0.4;
+            background-color: transparent;
+
+            video{
+                display: none;
+            }
+        }
+
+        .register-foreground-container{
+            width: 100%;
+            height: 100%;
+            min-width: 100%;
+            background-color: transparent;
+            box-shadow: none;
+
+            .register-form-title-container{
+                background-color: transparent;
+                position: static;
+                padding-block: 24px;
+
+                h1{
+                    color: rgba($neutral-color-dark-gray, 1);
+                }
+
+                p{
+                    color: rgba($neutral-color-dark-gray, 1);
+                    width: 28ch;
+                    line-height: 20px;
+                }
+            }
+
+            form{
+                background-color: transparent;
+
+                .form-names-container, .form-password-container, .form-type-capacity-container{
+                    column-gap: 0;
+                    flex-wrap: wrap;
+
+                    div:first-child{
+                        width: 100%;
+                    }
+
+                    div:last-child{
+                        width: 100%;
+                    }
+
+                    select{
+                        width: 100%;
+                        background-color: rgba($neutral-color-white, 1);
+                    }
+                }
+                
+                .form-buttons-container{
+                    margin-top: 24px;
+                    row-gap: 12px;
+
+                    button{
+                        margin: 0;
+                    }
+                }
+            }
+        }
+    }
 }

@@ -19,7 +19,6 @@
 
             img{
                 height: 100%;
-                // max-height: 700px;
                 width: 100%;
                 object-fit: cover;
                 object-position: left 50%;
@@ -28,10 +27,8 @@
         }
     
         .login-form-container{
-            // min-height: 700px;
             max-width: 100%;
             min-height: 100%;
-            // max-height: 100%;
             display: grid;
             grid-template-rows: 1fr 1fr 1fr;
             align-items: center;
@@ -73,7 +70,7 @@
                     border-radius: 22.5px;
                     @include font-config($fbold, $f14px, $fnormal, $neutral-color-dark-gray, 1);
                     padding-left: 44px;
-                    padding-top: 1px;
+                    padding-top: 2px;
                     background-repeat: no-repeat;
 
                     &::placeholder{
