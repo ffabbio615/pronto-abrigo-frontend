@@ -18,24 +18,31 @@
             flex-direction: column;
             justify-content: start;
             align-items: center;
-            row-gap: 12px;
-            padding-block: 48px;
+            row-gap: 16px;
+            padding-block: 12px;
+            overflow-y: auto;
 
-            .home-profile-picture{
-                width: 150px;
-                height: 150px;
-                object-fit: cover;
-                box-shadow: 2px 2px 15px rgba($neutral-color-dark-gray, 0.8);
-                border-radius: 50%;
-                margin-bottom: 8px;
-            }
+            .home-profile-container{
+                @include vertical-align(100%, 30%, 0);
+                min-height: 170px;
+                row-gap: 12px;
 
-            p{
-                text-align: center;
-                text-transform: uppercase;
-                color: $neutral-color-white;
-                @include font-config($fbold, 20px, $fnormal, $neutral-color-white, 1);
-                margin-bottom: 25%;
+                .home-profile-picture{
+                    height: 75%;
+                    aspect-ratio: 1 / 1;
+                    max-height: 150px;
+                    min-height: 120px;
+                    object-fit: cover;
+                    box-shadow: 2px 2px 15px rgba($neutral-color-dark-gray, 0.8);
+                    border-radius: 50%;
+                }
+    
+                p{
+                    text-align: center;
+                    text-transform: uppercase;
+                    color: $neutral-color-white;
+                    @include font-config($fbold, 20px, $fnormal, $neutral-color-white, 1);
+                }
             }
 
             button{
@@ -86,105 +93,28 @@
                 z-index: 0;
             }
 
-            .panel-content-container{
+            .panel-content-container{ //O Container principal de todas as páginas
                 width: 100%;
                 height: 100%;
                 position: absolute;
                 z-index: 4;
-
-                .home-menu-container{
-                    width: 100%;
-                    height: 100%;
-                    position: relative;
-                    display: flex;
-                    justify-content: center;
-                    align-items: start;
-                    gap: 32px;
-                    flex-wrap: wrap;
-                    position: relative;
-
-                    .home-title-container{
-                        @include vertical-align(100%, 120px, 0);
-                        flex-wrap: wrap;
-
-                        
-                        h1{
-                            text-align: center;
-                            @include font-config($fextraBold, $f42px, $fnormal, $neutral-color-dark-gray, 1);
-                            margin-bottom: 12px;
-                        }
-                        p{
-                            text-align: center;
-                            @include font-config($fregular, 15px, $fnormal, $neutral-color-dark-gray, 1);
-                        }
-                    }
-    
-                    .pronto-abrigo-logo{
-                        height: 120px;
-                        position: absolute;
-                        right: 24px;
-                        bottom: 24px;
-                    }
-
-                    .buttons-container{
-                        height: 100%;
-                        display: flex; 
-                        justify-content: center;
-                        align-items: center;
-                        gap: 32px;
-                        flex-wrap: wrap;
-                        position: absolute;
-                        
-                        .menu-card {
-                            width: 25%;
-                            min-width: 400px;
-                            height: 210px;
-                            min-height: 150px;
-                            background-color: rgba($primary-color-yellow, 0.8);
-                            color: rgba($neutral-color-white, 1);
-                            display: flex;
-                            flex-direction: column;
-                            justify-content: center;
-                            align-items: center;
-                            gap: 12px;
-                            border-radius: 20px;
-                            border: none;
-                            cursor: pointer;
-                            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-                            transition: all 0.25s ease;
-                            @include font-config($fbold, 18px, $fnormal, $neutral-color-white, 1);
-    
-                            img {
-                                width: 60px;
-                                height: 60px;
-                            }
-    
-                            span {
-                                font-weight: 700;
-                                font-size: 16px;
-                                text-align: center;
-                                color: #333;
-                            }
-    
-                            &:hover {
-                                transform: translateY(-6px) scale(1.03);
-                                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-                                background-color: rgba($primary-color-yellow, 1);
-                            }
-    
-                            &:active {
-                                transform: scale(0.98);
-                            }
-                        }
-                    }
-                }
             }
         }
     }
 }
 
-@media (max-width: 1024px) {}
+@media (max-width: 1023px) {
+    .home-main-container{
+        .home-panels-container{
+            grid-template-columns: 100%;
 
-@media (max-width: 768px) {}
+            .profile-panel{
+                display: none;
+            }
+        }
+    }
+}
 
-@media (max-width: 480px) {}
+// @media (max-width: 1023px) {}
+// @media (max-width: 500px) {}
+

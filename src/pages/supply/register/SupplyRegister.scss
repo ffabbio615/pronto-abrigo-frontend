@@ -54,3 +54,38 @@
     }
 }
 
+
+@media (max-width: 500px) {
+    .supply-register-container{
+        height: 100%;
+        overflow-y: auto;
+        padding: 12px;
+        padding-block: 24px;
+
+        .supply-register-title-container{
+            width: 90%;
+            margin-inline: auto;
+            
+            h2{
+                text-wrap: balance;
+                margin-bottom: 4px;
+            }
+        }
+
+        form{
+            height: auto;
+            padding: 0;
+            
+            .supply-register-buttons-container{
+                width: 90%;
+                column-gap: 20px;
+
+                button{
+                    width: 150px;
+                    transition: none;
+                    padding-top: 1px;
+                }
+            }      
+        }
+    }
+}

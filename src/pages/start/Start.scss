@@ -1,0 +1,144 @@
+@use "../../App.scss" as *;
+
+.start-menu-container{
+    width: 95%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    margin-inline: auto;
+    padding-inline: 12px;
+    position: relative;
+
+    .start-title-container{
+        @include vertical-align(100%, 120px, 0);
+        flex-wrap: wrap;
+  
+        h1{
+            text-align: center;
+            @include font-config($fextraBold, $f42px, $fnormal, $neutral-color-dark-gray, 1);
+            margin-bottom: 12px;
+        }
+        p{
+            text-align: center;
+            @include font-config($fregular, 15px, $fnormal, $neutral-color-dark-gray, 1);
+        }
+    }
+
+    .buttons-container{
+        width: 100%;
+        height: calc(100% - 232px);
+        display: flex; 
+        justify-content: space-around;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 20px;
+        padding-block: 12px;
+        
+        .menu-card {
+            width: 28%;
+            min-width: 300px;
+            max-width: 400px;
+            aspect-ratio: 16 / 9;
+            background-color: rgba($primary-color-yellow, 1);
+            color: rgba($neutral-color-white, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: none;
+            @include font-config($fbold, 18px, $fnormal, $neutral-color-white, 1);
+
+            img {
+                width: 60px;
+                height: 60px;
+            }
+
+            span {
+                font-weight: 700;
+                font-size: 16px;
+                text-align: center;
+                color: #333;
+            }
+        }
+    }
+
+    .pronto-abrigo-logo{
+        height: 100px;
+        position: absolute;
+        right: -12px;
+        bottom: 12px;
+    }
+}
+
+
+@media (max-width: 1023px) {
+    .start-menu-container{
+        height: auto;
+        padding-block: 24px;
+
+        .start-title-container{
+            width: 100%;
+            height: auto;
+            margin-bottom: 12px;
+
+            h1{
+                text-wrap: balance;
+                margin-bottom: 4px;
+            }
+
+            p{
+                width: 35ch;
+            }
+        }
+
+        .buttons-container{
+            width: 100%;
+            gap: 32px;
+            max-width: 800px;
+            margin-bottom: 16px;
+
+            .menu-card{
+                min-width: 400px;
+                max-width: 500px;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
+            }
+        }
+
+        .pronto-abrigo-logo{
+            position: static;
+        }
+    }
+}
+
+@media (max-width: 500px) {
+    .start-menu-container{
+        
+        .start-title-container{
+        
+            h1{
+                width: 15ch;
+            }
+        
+            p{
+                text-wrap: balance;
+            }
+        }
+        
+        .buttons-container{
+            gap: 20px;
+            max-width: 90%;
+            
+            .menu-card{
+                min-width: 280px;
+                max-width: 300px;
+            }
+        }
+    }
+}

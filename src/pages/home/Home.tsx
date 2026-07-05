@@ -3,6 +3,7 @@ import { usePageLoader } from "../../hooks/usePageLoader";
 import { useEffect, useState } from 'react';
 import { getMyShelter } from "../../services/shelters";
 import { useAuthStore } from "../../store/useAuthStore";
+import Start from '../start/Start';
 import ShelterUpdate from '../shelter/update/ShelterUpdate';
 import SupplyUpdate from '../supply/update/SupplyUpdate';
 import LocalLoader from '../../components/loader/LocalLoader';
@@ -61,9 +62,12 @@ export default function Home() {
     return(
         <div className="home-main-container">
             <div className='home-panels-container'>
+                
                 <div className="profile-panel">
-                    <img className="home-profile-picture" src={shelter?.photo_url || "https://cdn-icons-png.flaticon.com/512/149/149071.png"} alt="Foto de perfil"/>
-                    <p>{`Seja bem-vindo${shelter?.nickname ? ", " + shelter.nickname : ""}!`}</p>
+                    <div className='home-profile-container'>
+                        <img className="home-profile-picture" src={shelter?.photo_url || "https://cdn-icons-png.flaticon.com/512/149/149071.png"} alt="Foto de perfil"/>
+                        <p>{`Seja bem-vindo${shelter?.nickname ? ", " + shelter.nickname : ""}!`}</p>
+                    </div>
                     
                     <button className={profileMenuItem === "default" ? 'active-page': ''} 
                     onClick={()=> { if(profileMenuItem !=="default") setLocalLoader(true); setTimeout(()=> setLocalLoader(false), 1000);  setProfileMenuItem("default"); }}>
@@ -99,27 +103,8 @@ export default function Home() {
                     <LocalLoader />
                     <div className='menu-panel-background'></div>
                     <div className='panel-content-container'>
-                        {profileMenuItem === "default" && 
-                            <div className='home-menu-container'>
-                                <div className='home-title-container'>
-                                    <h1>Sistema Pronto Abrigo</h1>
-                                    <p>Utilize o menu abaixo e o painel lateral para realizar alguma ação.</p>
-                                </div>
-                                <div className='buttons-container'>
-                                    <button className='menu-card' onClick={()=> { setLocalLoader(true);  setProfileMenuItem("registerEntity"); }}>
-                                        <img src='/icon/entitiesIcon.svg' alt='Ícone do botão de cadastro de desabrigados'/> Cadastrar Desabrigado</button>
-                                    <button className='menu-card' onClick={()=> { setLocalLoader(true);  setProfileMenuItem("registerSupply"); }}>
-                                        <img src='/icon/supplyIcon.svg' alt='Ícone do botão de cadastro de mantimentos'/> Cadastrar Mantimento</button>
-                                    <button className='menu-card' onClick={()=> { setLocalLoader(true);  setProfileMenuItem("confirmDonations"); }}>
-                                        <img src='/icon/donationsIcon.svg' alt='Ícone do botão de confirmar doações'/> Confirmar Doações</button>
-                                    <button></button>
-                                </div>
-                                    <img className='pronto-abrigo-logo' src='/img/prontoAbrigoLogo.png' alt='Logo Pronto Abrigo' />
-                                
-                            </div>
-                        }
-
                         {/* Páginas dos botões de dentro do menu lateral  */}
+                        {profileMenuItem === "default" && <Start setProfileMenuItem={setProfileMenuItem} />}
                         {profileMenuItem === "updateShelter" && shelter && <ShelterUpdate shelter={shelter} />}
                         {profileMenuItem === "getEntities" && <EntityUpdate />}
                         {profileMenuItem === "getSupplies" && <SupplyUpdate />}

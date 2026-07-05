@@ -12,27 +12,32 @@ export default function ActiveDonationsList() {
   const { setLocalLoader } = useStore();
   const { alert } = useAlertStore();
   const [refreshComponent, setRefreshComponent] = useState<boolean>(false);
-
+  
   useEffect(() => {
+    let timer: ReturnType<typeof setTimeout>;
+  
     const fetchDonations = async () => {
       try {
         setLocalLoader(true);
-
+  
         const data = await getActiveDonations();
         setDonations(data);
-
       } catch (err) {
         console.error(err);
         await alert("Erro ao buscar doações!");
       } finally {
         setLocalLoader(false);
         setRefreshComponent(false);
-        setRefreshComponent(false);
-        setTimeout(()=> setRefreshComponent(true), 60000);
+  
+        timer = setTimeout(() => {
+          setRefreshComponent(true);
+        }, 60000);
       }
     };
-
+  
     fetchDonations();
+  
+    return () => clearTimeout(timer);
   }, [setLocalLoader, alert, refreshComponent]);
 
   const handleConfirmSuccess = (id: number) => {
