@@ -7,7 +7,7 @@ import { createSupply } from "../../../services/supplies";
 type Props = {
   setProfileMenuItem: React.Dispatch<
     React.SetStateAction<
-      "default" | "updateShelter" | "getSupplies" | "getEntities" | "getDonations" | 
+      "start" | "updateShelter" | "getSupplies" | "getEntities" | "getDonations" | 
       "registerEntity" | "registerSupply" | "confirmDonations"
     >
   >;
@@ -114,7 +114,7 @@ export default function SupplyRegister({ setProfileMenuItem }: Props) {
                 <input id="current_quantity" className={errors.current_quantity ? "error" : ""} type="number" name="current_quantity" value={form.current_quantity} onChange={handleChange} />
 
                 <div className='supply-register-buttons-container'>
-                    <button onClick={() => setProfileMenuItem("default")} type="button">Cancelar</button>
+                    <button onClick={() => setProfileMenuItem("start")} type="button">Cancelar</button>
                     <button type="submit">Cadastrar</button>
                 </div>
 

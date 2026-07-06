@@ -8,7 +8,7 @@ import type {Entity} from "../../../services/entities";
 type Props = {
   setProfileMenuItem: React.Dispatch<
     React.SetStateAction<
-      "default" | "updateShelter" | "getSupplies" | "getEntities" | "getDonations" | 
+      "start" | "updateShelter" | "getSupplies" | "getEntities" | "getDonations" | 
       "registerEntity" | "registerSupply" | "confirmDonations"
     >
   >;
@@ -177,7 +177,7 @@ export default function EntityRegister({ setProfileMenuItem }: Props) {
                 </select>
 
                 <div className='entity-register-buttons-container'>
-                    <button onClick={() => setProfileMenuItem("default")} type="button">Cancelar</button>
+                    <button onClick={() => setProfileMenuItem("start")} type="button">Cancelar</button>
                     <button type="submit">Cadastrar</button>
                 </div>
 

@@ -34,6 +34,7 @@ export default function Home() {
     const { setLocalLoader } = useStore();
     const [shelter, setShelter] = useState<UpdateData | null>(null);
     const { logout } = useAuthStore();
+    const [profilePanelActive, setProfilePanelActive] = useState<boolean>(false);
     
     useEffect(() => {
         const token = useAuthStore.getState().token;
@@ -56,41 +57,45 @@ export default function Home() {
   }, []);
 
     const[profileMenuItem, setProfileMenuItem] = useState<
-    "default" | "updateShelter" | "getSupplies" | "getEntities" | "getDonations" | 
-    "registerEntity" | "registerSupply" | "confirmDonations">("default");
+    "start" | "updateShelter" | "getSupplies" | "getEntities" | "getDonations" | 
+    "registerEntity" | "registerSupply" | "confirmDonations">("start");
+
+    const checkMobileMenuActivation = ()=> {
+        if (profilePanelActive) setProfilePanelActive(!profilePanelActive);
+    }
 
     return(
         <div className="home-main-container">
             <div className='home-panels-container'>
-                
-                <div className="profile-panel">
+
+                <div className={profilePanelActive  ? "profile-panel profile-mobile-panel" : "profile-panel"}>
                     <div className='home-profile-container'>
                         <img className="home-profile-picture" src={shelter?.photo_url || "https://cdn-icons-png.flaticon.com/512/149/149071.png"} alt="Foto de perfil"/>
                         <p>{`Seja bem-vindo${shelter?.nickname ? ", " + shelter.nickname : ""}!`}</p>
                     </div>
                     
-                    <button className={profileMenuItem === "default" ? 'active-page': ''} 
-                    onClick={()=> { if(profileMenuItem !=="default") setLocalLoader(true); setTimeout(()=> setLocalLoader(false), 1000);  setProfileMenuItem("default"); }}>
+                    <button className={profileMenuItem === "start" ? 'active-page': ''} 
+                    onClick={()=> { if(profileMenuItem !=="start") setLocalLoader(true); setTimeout(()=> setLocalLoader(false), 1000);  setProfileMenuItem("start"); checkMobileMenuActivation(); }}>
                         <img src='/icon/homeIcon.svg' alt='Ícone do botão de início'/>Início
                     </button>
 
                     <button className={profileMenuItem === "updateShelter" ? 'active-page': ''} 
-                    onClick={() => { if(profileMenuItem !=="updateShelter") setLocalLoader(true);  setProfileMenuItem("updateShelter"); }}>
+                    onClick={() => { if(profileMenuItem !=="updateShelter") setLocalLoader(true);  setProfileMenuItem("updateShelter"); checkMobileMenuActivation(); }}>
                         <img src='/icon/shelterEditIcon.svg' alt='Ícone do botão de editar cadastro'/> Editar Cadastro
                     </button>
 
                     <button className={profileMenuItem === "getEntities" ? 'active-page': ''} 
-                    onClick={()=> { if(profileMenuItem !=="getEntities") setLocalLoader(true);  setProfileMenuItem("getEntities"); }}>
+                    onClick={()=> { if(profileMenuItem !=="getEntities") setLocalLoader(true);  setProfileMenuItem("getEntities"); checkMobileMenuActivation(); }}>
                         <img src='/icon/entitiesIcon.svg' alt='Ícone do botão de acolhidos'/> Acolhidos
                     </button>
 
                     <button className={profileMenuItem === "getSupplies" ? 'active-page': ''} 
-                    onClick={()=> { if(profileMenuItem !=="getSupplies") setLocalLoader(true);  setProfileMenuItem("getSupplies"); }}>
+                    onClick={()=> { if(profileMenuItem !=="getSupplies") setLocalLoader(true);  setProfileMenuItem("getSupplies"); checkMobileMenuActivation(); }}>
                         <img src='/icon/supplyIcon.svg' alt='Ícone do botão de mantimentos'/> Mantimentos
                     </button>
 
                     <button className={profileMenuItem === "getDonations" ? 'active-page': ''} 
-                    onClick={()=> { if(profileMenuItem !=="getDonations") setLocalLoader(true);  setProfileMenuItem("getDonations"); }}>
+                    onClick={()=> { if(profileMenuItem !=="getDonations") setLocalLoader(true);  setProfileMenuItem("getDonations"); checkMobileMenuActivation(); }}>
                         <img src='/icon/donationsIcon.svg' alt='Ícone do botão de doações'/> Doações
                     </button>
 
@@ -99,12 +104,19 @@ export default function Home() {
                     </button>
                 </div>
 
+
+                <button className='profile-mobile-button-menu'><span onClick={()=> setProfilePanelActive(!profilePanelActive)}>☰</span></button>
+                {profilePanelActive  &&
+                    <button className='profile-mobile-button-close-menu' onClick={()=> setProfilePanelActive(!profilePanelActive)}></button>
+                }
+        
+
                 <div className="panel-menu">
                     <LocalLoader />
                     <div className='menu-panel-background'></div>
                     <div className='panel-content-container'>
                         {/* Páginas dos botões de dentro do menu lateral  */}
-                        {profileMenuItem === "default" && <Start setProfileMenuItem={setProfileMenuItem} />}
+                        {profileMenuItem === "start" && <Start setProfileMenuItem={setProfileMenuItem} />}
                         {profileMenuItem === "updateShelter" && shelter && <ShelterUpdate shelter={shelter} />}
                         {profileMenuItem === "getEntities" && <EntityUpdate />}
                         {profileMenuItem === "getSupplies" && <SupplyUpdate />}

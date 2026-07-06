@@ -169,12 +169,12 @@ export default function ShelterUpdate({ shelter }: { shelter: UpdateData }){
 
                 <div className='form-names-container'>
                     <div>
-                    <label htmlFor="name"><span>*</span>Nome completo do abrigo:</label>
-                    <input className={errors.name ? "error" : ""} id="name" name="name" placeholder="Ex: Abrigo Central RJ" value={form.name} onChange={handleChange} />
+                        <label htmlFor="name"><span>*</span>Nome completo do abrigo:</label>
+                        <input className={errors.name ? "error" : ""} id="name" name="name" placeholder="Ex: Abrigo Central RJ" value={form.name} onChange={handleChange} />
                     </div>
                     <div>
-                    <label htmlFor="nickname"><span>*</span>Nome comercial:</label>
-                    <input className={errors.nickname ? "error" : ""} id="nickname" name="nickname" placeholder="Ex: ACNRJ" value={form.nickname} onChange={handleChange} />
+                        <label htmlFor="nickname"><span>*</span>Nome comercial:</label>
+                        <input className={errors.nickname ? "error" : ""} id="nickname" name="nickname" placeholder="Ex: ACNRJ" value={form.nickname} onChange={handleChange} />
                     </div>
                 </div>
 
@@ -184,45 +184,45 @@ export default function ShelterUpdate({ shelter }: { shelter: UpdateData }){
                 <label htmlFor="address"><span>*</span>Endereço completo:</label>
                 <input className={errors.address ? "error" : ""} id="address" name="address" placeholder="Ex: Rua A, 123 - Rio de Janeiro" value={form.address} onBlur={getCoordinates} onChange={handleChange} />
 
-                    <div className='form-password-container'>
-                        <div>
-                            <label htmlFor="password"><span>*</span>Senha:</label>
-                            <input className={errors.password ? "error" : ""} id="password" name="password" type="password" onChange={handleChange} />
-                            <ul className="password-rules">
-                                <li className={passwordRules.length ? "ok" : ""}>Mínimo de 8 caracteres</li>
-                                <li className={passwordRules.upper ? "ok" : ""}>Letra maiúscula</li>
-                                <li className={passwordRules.lower ? "ok" : ""}>Letra minúscula</li>
-                                <li className={passwordRules.number ? "ok" : ""}>Número</li>
-                            </ul>
-                        </div>
+                <div className='form-password-container'>
+                    <div>
+                        <label htmlFor="password"><span>*</span>Senha:</label>
+                        <input className={errors.password ? "error" : ""} id="password" name="password" type="password" onChange={handleChange} />
+                        <ul className="password-rules">
+                            <li className={passwordRules.length ? "ok" : ""}>Mínimo de 8 caracteres</li>
+                            <li className={passwordRules.upper ? "ok" : ""}>Letra maiúscula</li>
+                            <li className={passwordRules.lower ? "ok" : ""}>Letra minúscula</li>
+                            <li className={passwordRules.number ? "ok" : ""}>Número</li>
+                        </ul>
+                    </div>
 
-                        <div>
+                    <div>
                         <label htmlFor="confirmPassword">Repita a senha:</label>
                         <input className={errors.password || errors.confirmPassword ? "error" : ""} id="confirmPassword" name="confirmPassword" type="password" onChange={handleChange} />
-                        </div>
-
                     </div>
 
-                    <label htmlFor="status">Estado de funcionamento:</label>
-                    <select id="status" name="status" onChange={handleChange}>
-                        <option value="open">Aberto</option>
-                        <option value="closed">Fechado</option>
-                    </select>
+                </div>
 
-                    <label htmlFor="capacity"><span>*</span>Capacidade:</label>
-                    <input className={errors.capacity ? "error" : ""} id="capacity" name="capacity" type="number" placeholder="Ex: 100" value={form.capacity} onChange={handleChange} />
+                <label htmlFor="status">Estado de funcionamento:</label>
+                <select id="status" name="status" onChange={handleChange}>
+                    <option value="open">Aberto</option>
+                    <option value="closed">Fechado</option>
+                </select>
 
-                    <div className='form-photo-container'>
-                        <div>
-                            <label htmlFor="photo_url">Foto do local:</label>
-                            <input id="photo_url" name="photo_url" placeholder="Cole a URL da imagem" value={form.photo_url} onChange={handleChange} />
-                        </div>
-                        <div>
-                            {form.photo_url && (
-                                <img src={form.photo_url} alt="Pré-visualização do abrigo" />
-                            )}
-                        </div>
+                <label htmlFor="capacity"><span>*</span>Capacidade:</label>
+                <input className={errors.capacity ? "error" : ""} id="capacity" name="capacity" type="number" placeholder="Ex: 100" value={form.capacity} onChange={handleChange} />
+
+                <div className='form-photo-container'>
+                    <div>
+                        <label htmlFor="photo_url">Foto do local:</label>
+                        <input id="photo_url" name="photo_url" placeholder="Cole a URL da imagem" value={form.photo_url} onChange={handleChange} />
                     </div>
+                    <div>
+                        {form.photo_url && (
+                            <img src={form.photo_url} alt="Pré-visualização do abrigo" />
+                        )}
+                    </div>
+                </div>
 
                 <div className='form-buttons-container'>
                     <button type="submit">Atualizar</button>

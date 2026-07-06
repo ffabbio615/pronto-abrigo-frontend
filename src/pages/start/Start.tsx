@@ -5,7 +5,7 @@ import useStore from "../../store/useStore";
 type Props = {
   setProfileMenuItem: React.Dispatch<
     React.SetStateAction<
-      | "default"
+      | "start"
       | "updateShelter"
       | "getSupplies"
       | "getEntities"

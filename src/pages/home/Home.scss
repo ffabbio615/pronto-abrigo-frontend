@@ -11,11 +11,8 @@
         grid-template-columns: 300px 1fr;
 
         .profile-panel{
-            width: 100%;
-            height: 100%;
+            @include vertical-align(100%, 100%, 0);
             background-color: $primary-color-blue;
-            display: flex;
-            flex-direction: column;
             justify-content: start;
             align-items: center;
             row-gap: 16px;
@@ -100,16 +97,70 @@
                 z-index: 4;
             }
         }
+
+        .profile-mobile-button-menu{
+            display: none;
+        }
     }
 }
 
 @media (max-width: 1023px) {
     .home-main-container{
+        overflow-y: hidden;
         .home-panels-container{
             grid-template-columns: 100%;
+            grid-template-rows: 50px 1fr;
+            grid-template-areas: 'profile-mobile-button-menu' 'panel-menu';
+            position: relative;
 
             .profile-panel{
                 display: none;
+            }
+
+            .profile-mobile-panel{
+                display: flex;
+                position: fixed;
+                z-index: 11;
+                width: 50%;
+                min-width: 250px;
+                max-width: 300px;
+                row-gap: 16px;
+
+                .home-profile-container{
+                    p{
+                        width: 16ch;
+                    }
+                }
+            }
+
+            .profile-mobile-button-menu{
+                @include horizontal-align(100%, 50px, 0);
+                justify-content: left;
+                padding-left: 16px;
+                background-color: $neutral-color-white;
+                @include font-config($fextraBold, 28px, $fnormal, $primary-color-blue, 1);
+                grid-area: profile-mobile-button-menu;
+            }
+
+            .profile-mobile-button-close-menu{
+                @include horizontal-align(100%, 100%, 0);
+                background-color: rgba($neutral-color-black, 0.8);
+            }
+
+            .profile-mobile-button-menu, .profile-mobile-button-close-menu{
+                position: fixed;
+                z-index: 10;
+
+                &:focus, 
+                &:active {
+                    outline: none;
+                    box-shadow: none;
+                    -webkit-tap-highlight-color: transparent;
+                }
+            }
+
+            .panel-menu{
+                grid-area: panel-menu;
             }
         }
     }
