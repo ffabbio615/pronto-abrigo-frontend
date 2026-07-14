@@ -10,6 +10,7 @@
         @include vertical-align(100%, 120px, 0);
         flex-wrap: wrap;
         position: sticky;
+        z-index: 1;
         padding-block: 12px;
         top: 0;
         background-color: $neutral-color-white;
@@ -29,33 +30,16 @@
         width: 100%;
         height: 100%;
         display: flex;
+        flex-wrap: wrap;
         align-items: center;
-        justify-content: space-between;
+        justify-content: space-around;
         padding: 24px 24px 0 24px;
-        column-gap: 12px;
+        gap: 12px;
 
-        .name-filter-container{
-            width: 300px;
-        }
-
-        .birth-date-filter-container{
-            width: 200px;
-        }
-
-        .estimated-age-filter-container{
-            width: 200px;
-        }
-
-        .species-filter-container{
-            width: 200px;
-        }
-
-        .breed-filter-container{
-            width: 200px;
-        }
-
-        .description-filter-container{
-            width: 350px;
+        .name-filter-container, .description-filter-container, .birth-date-filter-container, .estimated-age-filter-container, .species-filter-container, .breed-filter-container{
+            width: 30%;
+            max-width: 450px;
+            min-width: 300px;
         }
         
         div{
@@ -84,11 +68,10 @@
     }
 
     .entity-list{
-        width: 80%;
+        width: 100%;
         max-width: 1200px;
-        min-width: 1000px;
         display: grid;
-        grid-template-columns: calc(33.33% - 12px) calc(33.33% - 12px) calc(33.333% - 12px);
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
         column-gap: 12px;
         row-gap: 36px;
         justify-items: center;
@@ -98,8 +81,8 @@
         padding: 36px 20px 20px 20px;
 
         .entity-card{
-            width: 100%;
-            max-width: 300px;
+            width: 300px;
+            // max-width: 300px;
             background-color: $neutral-color-white;
             padding: 12px;
             border-radius: 20px;
@@ -127,11 +110,13 @@
             }
 
             .card-body{
+                height: 110px;
                 display: flex;
                 flex-wrap: wrap;
-                row-gap: 4px;
+                row-gap: 9px;
                 margin-bottom: 12px;
                 padding-inline: 4px;
+                align-items: start;
 
 
                 .name-age-container {
@@ -139,6 +124,7 @@
                     justify-content: space-between;
                     align-items: center;
                     width: 100%;
+                    height: 18px;
                 
                     .name-icon {
                         display: flex;
@@ -163,13 +149,22 @@
                 .animal-informations-container{
                     display: flex;
                     width: 100%;
+                    height: 17px;
                     column-gap: 8px;
 
                     .entity-species {
-                        @include font-config($fbold, $f18px, $fnormal, $neutral-color-dark-gray, 1);
+                        @include font-config($fregular, $f14px, $fnormal, $neutral-color-dark-gray, 1);
                     }
                     
                     .entity-breed {
+                        width: 130px;
+                        @include font-config($fregular, $f14px, $fnormal, $neutral-color-dark-gray, 1);
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+
+                    strong{
                         @include font-config($fbold, $f18px, $fnormal, $neutral-color-dark-gray, 1);
                     }
                 }
@@ -177,11 +172,18 @@
                 .entity-description {
                     @include font-config($fregular, $f13px, $fnormal, $neutral-color-dark-gray, 1);
                     text-align: justify;
+                    height: 65px;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 5;
+                    line-clamp: 5;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
                 }
             }
 
             .card-footer {
                 padding-inline: 4px;
+                height: 20px;
 
                 div{
                     display: flex;
@@ -234,4 +236,59 @@
             
         }
     }
+}
+
+@media (max-width: 1023px) {
+    .entity-update-main-container{
+        
+        .entity-title-container{
+            width: 90%;
+            margin-inline: auto;
+            height: auto;
+            min-height: 120px;
+            max-height: 160px;
+            padding-block: 12px;
+            
+            h2{
+            text-wrap: balance;
+            margin-bottom: 4px;
+            }
+    
+            p{
+            text-wrap: balance;
+            }
+        }
+
+        .filters-container{
+            width: 90%;
+
+            .name-filter-container, .description-filter-container, .birth-date-filter-container, .estimated-age-filter-container, .species-filter-container, .breed-filter-container{
+                width: 30%;
+                max-width: 250px;
+                min-width: 150px;
+            }
+        }
+    }   
+}
+
+@media (max-width: 500px) {
+    .entity-update-main-container{
+
+        .entity-title-container{
+            position: static;
+        }
+
+        .filters-container{
+
+            .name-filter-container, .description-filter-container, .birth-date-filter-container, .estimated-age-filter-container, .species-filter-container, .breed-filter-container{
+                width: 100%;
+                max-width: none;
+                min-width: none;
+            }
+        }
+
+        .entity-list{
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        }
+    }   
 }

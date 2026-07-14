@@ -1,11 +1,47 @@
 @use '../../../App.scss' as *;
 
-.modal-overlay{
+.entity-modal-overlay {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    inset: 0;
+    background: rgba($neutral-color-black, 0.75);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    backdrop-filter: blur(6px);
+    animation: fade-in 0.2s ease;
 
-    .modal{
+    @keyframes fade-in {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    .entity-modal-container{
+        position: absolute;
+        // position: relative;
+        top: 0;
+        width: 100%;
+        max-width: 480px;
+        height: calc(100% - 48px);
+        row-gap: 8px;
+        padding: 32px;
+        margin-block: 24px;
         display: flex;
         flex-wrap: wrap;
-        row-gap: 12px;
+        justify-content: center;
+        overflow-y: auto;
+        background: $neutral-color-white;
+        border-radius: 10px;
+        box-shadow: 0 32px 80px rgba(0,0,0,0.35);
+        animation: slide-up 0.25s ease;
+
+        @keyframes slide-up {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
 
         h3{
             width: 100%;
@@ -53,6 +89,7 @@
             display: flex;
             align-items: center;
             column-gap: 8px;
+            margin-top: 8px;
 
             input[type="checkbox"] {
                 width: 20px;
@@ -117,7 +154,7 @@
                 border: none;
                 border-radius: 20px;
                 @include font-config($fsemiBold, $f16px, $fnormal, $neutral-color-white, 1);
-                margin-top: 24px;
+                margin-block: 16px;
                 cursor: pointer;
                 transition: all 0.2s ease;
 
@@ -127,6 +164,4 @@
             }
         }
     }
-
-
 }

@@ -3,15 +3,19 @@
 
 .supply-update-main-container{
     width: 100%;
-    height: 100%;
     display: flex;
     flex-direction: column;
-    padding: 24px;
-    overflow-y: hidden;
+    justify-content: center;
+    align-items: center;
 
     .supply-title-container{
         @include vertical-align(100%, 120px, 0);
         flex-wrap: wrap;
+        position: sticky;
+        z-index: 1;
+        padding-block: 12px;
+        top: 0;
+        background-color: $neutral-color-white;
         
         h2{
             text-align: center;
@@ -26,19 +30,20 @@
 
     .supply-cards-container{
         width: 100%;
-        flex: 1;
+        max-width: 1500px;
         display: grid;
-        grid-template-columns: calc(33.33% - 12px) calc(33.33% - 12px) calc(33.33% - 12px);
-        column-gap: 12px;
+        margin-inline: auto;
+        grid-template-columns: repeat(auto-fit, minmax(310px, 420px));
+        column-gap: 48px;
         row-gap: 36px;
-        justify-items: center;
+        justify-content: center;
         align-content:start;
         overflow-y: scroll;
         padding: 20px;
 
         .card-container{
             width: 100%;
-            max-width: 450px;
+            max-width: 400px;
             min-width: 360px;
             height: 100px;
             border-radius: 15px;
@@ -47,8 +52,8 @@
             background-color: $neutral-color-white;
             box-shadow: 0 0 10px rgba($neutral-color-dark-gray, 0.5);
             cursor: pointer;
-            transition: all 0.3s ease;
             position: relative;
+            transition: all 0.3s ease;
 
             &:hover{
                 transform: scale(1.05);
@@ -114,14 +119,19 @@
                 }
                                 
                 img{
-                    width: 50px;
-                    height: 50px;
+                    width: 40px;
+                    height: 40px;
                 }
 
                 strong{
                     width: 100%;
                     text-align: center;
                     @include font-config($fbold, 15px, $fnormal, $neutral-color-white, 1);
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                    line-clamp: 2;
+                    overflow: hidden;
                 }
             }
 
@@ -270,5 +280,167 @@
             height: 192px;
         }
 
+    }
+}
+
+@media (max-width: 768px) {
+    .supply-update-main-container{
+
+        .supply-title-container{
+            position: static;
+            width: 90%;
+            margin-inline: auto;
+            min-height: 120px;
+            height: auto;
+            max-height: 210px;
+            padding-block: 12px;
+            
+            h2{
+              text-wrap: balance;
+              margin-bottom: 4px;
+            }
+      
+            p{
+              text-wrap: balance;
+            }
+        }
+
+        .supply-cards-container{
+            max-width: 330px;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 320px));
+            column-gap: 0;
+            row-gap: 32px;
+            padding: 12px;
+            padding-block: 20px;
+            overflow-x: hidden;
+            
+            .card-container{
+                width: 100%;
+                max-width: 300px;
+                min-width: 280px;
+                height: 90px;
+                transition: all 0.2s ease;
+                
+                &:hover{
+                    transform: scale(1.02);
+                }
+
+                .title-icon-container{
+                    row-gap: 5px;
+
+                    strong{
+                        @include font-config($fbold, 14px, $fnormal, $neutral-color-white, 1);
+                    }
+                }
+                
+                .edit-delete-buttons-container{
+                    column-gap: 6px;
+                    right: -8px;
+                    top: -16px;
+                    opacity: 0;
+                    pointer-events: none;
+                    transition: none;
+
+                    button{
+                        transition: none;
+
+                        &:hover{
+                            transform: scale(1);
+                        }
+                    }
+                }
+
+                .quantities-container{
+                    padding: 12px;
+                    grid-template-rows: 30% 70%;
+                }
+
+                .quantities-container-edit-mode{
+                    grid-template-rows: 20px 35px 105px;
+                    align-items: end;
+
+                    .supply-edit-container{
+                        width: 100%;
+                        display: flex;
+                        flex-wrap: wrap;
+                        row-gap: 16px;
+                        justify-content: center;
+
+                        .supply-edit-inputs-container{
+                            display: flex;
+                            width: 100%;
+                            justify-content: center;
+
+                            div{
+                                display: flex;
+                                justify-content: center;
+                                flex-wrap: wrap;
+                                row-gap: 4px;
+
+                                label{
+                                    @include font-config($fsemiBold, $f14px, $fnormal, $neutral-color-dark-gray, 1);
+                                }
+                                
+                                input{
+                                    width: 60px;
+                                    height: 25px;
+                                    min-height: 25px;
+                                    border: 2px solid $neutral-color-light-gray;
+                                    border-radius: 5px;
+                                    @include font-config($fbold, $f14px, $fnormal, $neutral-color-dark-gray, 1);
+                                    
+                                    &::placeholder{
+                                        @include font-config($fbold, $f14px, $fnormal, $neutral-color-light-gray, 1);
+                                    }
+                                }
+                            }
+
+                        }
+
+                        .supply-edit-buttons-container{
+                            display: flex;
+                            width: 100%;
+                            justify-content: center;
+                            column-gap: 12px;
+
+                            button{
+                                width: 90px;
+                                height: 28px;
+                                border: none;
+                                border-radius: 5px;
+                                @include font-config($fsemiBold, $f16px, $fnormal, $neutral-color-white, 1);
+                                cursor: pointer;
+                                transition: background-color 0.2s ease;
+
+                                &:first-child{
+                                    background-color: $supply-low-red-emphasis;
+
+                                    &:hover{
+                                        background-color: $supply-low-red;
+                                    }
+                                }
+
+                                &:last-child{
+                                    background-color: $supply-high-green-emphasis;
+
+                                    &:hover{
+                                        background-color: $supply-high-green;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            .card-container-edit-mode{
+                height: 192px;
+
+                .edit-delete-buttons-container{
+                    display: none;
+                }
+            }
+        }
     }
 }

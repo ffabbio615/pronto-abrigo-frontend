@@ -209,70 +209,62 @@ const handleSave = async (form: UpdateEntity) => {
 
                 </div>
 
-            <div className="entity-list">
+                <div className="entity-list">
 
-                {filteredEntities.length === 0 ? (
-                    <p>Nenhum registro encontrado</p>
-                ) : (
-                    filteredEntities.map((item) => (
+                    {filteredEntities.length === 0 ? (
+                        <p>Nenhum registro encontrado</p>
+                    ) : (
+                        filteredEntities.map((item) => (
 
-
-                        <div className="entity-card" onClick={() => setSelectedEntity(item)} key={item.id}>
-                            
-                            <div className="card-header">
-                                {item.allow_public_photo && item.photo_url && (
-                                    <div className="card-image">
-                                        <img src={item.photo_url || "https://cdn-icons-png.flaticon.com/512/149/149071.png"} alt={`Foto de ${item.name}`} />
-                                    </div>
-                                )}
-                            </div>
-
-
-
-                            <div className="card-body">
-                                <div className='name-age-container'>
-                                    <div className="name-icon">
-                                        <strong className='entity-name'>{item.name}</strong>
-                                        {item.type === "person" ? 
-                                            <img src='./icon/personIcon.png' alt='Imagem da pessoa acolhida' /> 
-                                            :
-                                            <img src='./icon/animalIcon.png' alt='Imagem do animal acolhido' />
-                                        }
-                                    </div>
-                                        <p className='entity-age'>{calculateAge(item.birth_date, item.estimated_age)} anos</p>
-                                </div>
-
-                                {/* <p><strong>Idade:</strong> {item.estimated_age ?? "-"}</p> */}
-                                <div className='animal-informations-container'>
-                                    {item.type === "animal" && (
-                                        <>
-                                            <p className='entity-species'><strong>Espécie:</strong> {item.species}</p>
-                                            <p className='entity-breed'><strong>Raça:</strong> {item.breed}</p>
-                                        </>
+                            <div className="entity-card" onClick={() => setSelectedEntity(item)} key={item.id}>
+                                
+                                <div className="card-header">
+                                    {item.allow_public_photo && item.photo_url && (
+                                        <div className="card-image">
+                                            <img src={item.photo_url || "https://cdn-icons-png.flaticon.com/512/149/149071.png"} alt={`Foto de ${item.name}`} />
+                                        </div>
                                     )}
                                 </div>
-                                
-                                <p className='entity-description'>{item.description}</p>
-                            </div>
 
+                                <div className="card-body">
+                                    <div className='name-age-container'>
+                                        <div className="name-icon">
+                                            <strong className='entity-name'>{item.name}</strong>
+                                            {item.type === "person" ? 
+                                                <img src='./icon/personIcon.png' alt='Imagem da pessoa acolhida' /> 
+                                                :
+                                                <img src='./icon/animalIcon.png' alt='Imagem do animal acolhido' />
+                                            }
+                                        </div>
+                                            <p className='entity-age'>{calculateAge(item.birth_date, item.estimated_age)} anos</p>
+                                    </div>
 
-
-
-                            <div className="card-footer">
-                                <div>
-                                    <p className="entity-register-date"> <span>Entrada:</span> {formatDate(item.created_at)} </p>
-                                    <p className={`entity-status ${item.status}`}>{getStatusName(item.status)} </p>
+                                    {/* <p><strong>Idade:</strong> {item.estimated_age ?? "-"}</p> */}
+                                    {item.type === "animal" && (
+                                    <div className='animal-informations-container'>
+                                        <p className='entity-species'><strong>Espécie:</strong> {item.species}</p>
+                                        <p className='entity-breed'><strong>Raça:</strong> {item.breed}</p>
+                                    </div>
+                                    )}
+                                    
+                                    <p className='entity-description'>{item.description}</p>
                                 </div>
-                                {(item.status==="reunited" || item.status === "released") &&
-                                    <p className='entity-exit-reason'><span>Motivo da saída: </span>{ item.exit_reason}</p>
-                                }
+
+                                <div className="card-footer">
+                                    <div>
+                                        <p className="entity-register-date"> <span>Entrada:</span> {formatDate(item.created_at)} </p>
+                                        <p className={`entity-status ${item.status}`}>{getStatusName(item.status)} </p>
+                                    </div>
+                                    {(item.status==="reunited" || item.status === "released") &&
+                                        <p className='entity-exit-reason'><span>Motivo da saída: </span>{ item.exit_reason}</p>
+                                    }
+                                </div>
                             </div>
-                        </div>
-                    ))
-                )}
+                        ))
+                    )}
 
 
-            </div>
+                </div>
 
             </div>
 

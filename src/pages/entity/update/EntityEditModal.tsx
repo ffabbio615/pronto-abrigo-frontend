@@ -1,4 +1,4 @@
-import './EntityModal.scss';
+import './EntityEditModal.scss';
 import { useState } from "react";
 
 type Entity = {
@@ -62,8 +62,8 @@ export default function EntityEditModal({ entity, onClose, onSave }: Props) {
   };
 
   return (
-    <div className="modal-overlay">
-      <div className="modal">
+    <div className="entity-modal-overlay">
+      <div className="entity-modal-container">
 
         <h3>Editar registro</h3>
 
