@@ -59,14 +59,9 @@
                 transform: scale(1.05);
             }
 
-            &:hover .edit-delete-buttons-container{
-                opacity: 1;
-                pointer-events: auto;
-            }
-
             .edit-delete-buttons-container{
+                display: none;
                 position: absolute;
-                display: flex;
                 column-gap: 4px;
                 right: -35px;
                 top: -10px;
@@ -97,6 +92,12 @@
                         width: auto;
                     }
                 }
+            }
+
+            &:hover .edit-delete-buttons-container{
+                display: flex;
+                opacity: 1;
+                pointer-events: auto;
             }
 
             .title-icon-container{

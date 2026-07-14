@@ -1,6 +1,5 @@
 @use '../../../App.scss' as *;
 
-
 .donations-main-container{
     width: 100%;
     height: 100%;
@@ -124,4 +123,107 @@
           }
         }
     }
+}
+
+@media (max-width: 1366px) {
+  .donations-main-container{
+
+    .donations-title{
+      width: 90%;
+      margin-inline: auto;
+      
+      h2{
+        text-wrap: balance;
+        margin-bottom: 4px;
+      }
+    }
+
+    .donations-list{
+      width: 90%;
+      max-width: 900px;
+      min-width: 500px;
+      grid-template-columns: 48% 48%;
+      column-gap: 4%;
+      row-gap: 36px;
+      
+      .donation-card {
+  
+        .confirmation-card{
+  
+          .confirmation-card-button{
+            transition: none;
+            
+            &:hover{
+              background-color: $supply-high-green;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+@media (max-width: 768px) {
+    .donations-main-container{
+      grid-template-rows: minmax(120px, auto) 1fr;
+
+      .donations-title{
+        width: 90%;
+        margin-inline: auto;
+        height: auto;
+        padding-block: 12px;
+        
+        h2{
+          text-wrap: balance;
+          margin-bottom: 4px;
+        }
+
+        p{
+          text-wrap: balance;
+        }
+      }
+
+      .donations-list{
+        width: 90%;
+        max-width: none;
+        min-width: 300px;
+        grid-template-columns: 100%;
+        row-gap: 28px;
+        
+        .donation-card {
+          width: 90%;
+          min-width: 250px;
+          gap: 16px;
+          
+          .card-header {
+            font-size: 16px;
+
+            .date {
+              @include font-config($fextraBold, $f14px, $fnormal, $neutral-color-medium-gray, 1);
+            }
+          }
+          
+          .card-timer {
+            margin-bottom: 8px;
+            
+            .time-box {
+              span {
+                @include font-config($fregular, $f14px, $fnormal, $neutral-color-medium-gray, 1);
+              }
+            }
+          }
+          
+          .confirmation-card{
+    
+            .confirmation-card-button{
+                width: 180px;
+                height: 36px;
+                border-radius: 8px;
+                transition: none;
+            }
+          }
+        }
+      }
+  }
 }

@@ -12,7 +12,7 @@ export default function ConfirmBox() {
         <p className="confirm-box-title">Confirmação</p>
         <p className="confirm-box-message">{message}</p>
 
-        <div style={{ display: "flex", gap: "10px" }}>
+        <div>
           <button onClick={confirmNo}>Cancelar</button>
           <button onClick={confirmYes}>Confirmar</button>
         </div>

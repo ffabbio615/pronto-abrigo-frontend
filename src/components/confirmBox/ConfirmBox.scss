@@ -39,6 +39,8 @@
       }
 
       div{
+        display: flex;
+        gap: 12px;
 
           button{
             width: 170px;
@@ -59,5 +61,29 @@
             }
         }
       }
+    }
+}
+
+
+@media (max-width: 600px) {
+    .confirm-overlay{
+        
+        .confirm-box {
+            width: 85%;
+            min-width: 300px;
+            height: 200px;
+
+            .confirm-box-title{
+                width: 100%;
+                height: 100%;
+            }
+
+            div{
+                button{
+                    width: 130px;
+                    height: 36px;
+                }
+            }
+        }
     }
 }
