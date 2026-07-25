@@ -1,10 +1,11 @@
 import './ShelterUpdate.scss';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import useStore from '../../../store/useStore';
 import useAlertStore from "../../../store/useAlertStore";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import { updateShelter } from "../../../services/shelters";
+import supabase from "../../../services/supabase";
 
 type UpdateData = {
   name: string;
@@ -23,11 +24,14 @@ export default function ShelterUpdate({ shelter }: { shelter: UpdateData }){
 
     const { alert } = useAlertStore();
     const navigate = useNavigate();
+    const inputFileRef = useRef<HTMLInputElement>(null);
     
     const { setLoader, setLocalLoader } = useStore();
     useEffect(() => {
         setTimeout(()=> setLocalLoader(false), 1000);
     }, [setLocalLoader]);
+
+    const [image, setImage] = useState<File | null>(null);
 
     const [form, setForm] = useState({
         name: shelter.name || "",
@@ -109,8 +113,11 @@ export default function ShelterUpdate({ shelter }: { shelter: UpdateData }){
         }
     };
 
+    const getStoragePath = (url: string) => {
+        return url.split("/shelters/")[1];
+    };
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleUpdate = async (e: React.FormEvent) => {
         e.preventDefault();
 
         if (!validate()) {
@@ -141,18 +148,59 @@ export default function ShelterUpdate({ shelter }: { shelter: UpdateData }){
         try {
 
         setLoader(true);
-        const { confirmPassword, ...dataToSend } = form;
+
+        //Faz o upload da imagem
+        let photoUrl = form.photo_url;
+        let oldPhotoPath = null;
+
+        if (image) {
+
+            // guarda caminho antigo
+            if (form.photo_url) {
+                oldPhotoPath = getStoragePath(form.photo_url);
+            }
+
+
+            // sobe nova imagem
+            const fileName = `${shelter.nickname}-${Date.now()}-shelter-${image.name}`;
+
+            const { data: uploadData, error } = await supabase.storage
+                .from("shelters")
+                .upload(fileName, image);
+
+
+            if (error) {
+                await alert("Erro ao enviar imagem.");
+                return;
+            }
+
+
+            const { data: publicUrlData } = supabase.storage
+                .from("shelters")
+                .getPublicUrl(uploadData.path);
+
+
+            photoUrl = publicUrlData.publicUrl;
+        }
+
+        //Armazena e envia para o banco de dados
+        const { confirmPassword, ...dataToSend } = {...form, photo_url: photoUrl};
         void confirmPassword;
-        console.log("Enviando:", dataToSend);
-        await updateShelter(dataToSend);
+        await updateShelter({...dataToSend, photo_url: photoUrl});
+
+        // remove antiga depois
+        if (oldPhotoPath) {
+            await supabase.storage.from("shelters").remove([oldPhotoPath]);
+        }
+
+        await alert("Dados atualizados com sucesso!");
+        navigate(0);
 
         } catch (error) {
         console.error(error);
         await alert("Erro ao atualizar dados do abrigo!");
-        setLoader(false);
         } finally{
-            await alert("Dados atualizados com sucesso!");
-            navigate(0);
+            setLoader(false);
         }
     };
 
@@ -165,7 +213,7 @@ export default function ShelterUpdate({ shelter }: { shelter: UpdateData }){
                 <p>Preencha os campos abaixo para editar os dados do seu abrigo.</p>
             </div>
 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleUpdate}>
 
                 <div className='form-names-container'>
                     <div>
@@ -213,15 +261,9 @@ export default function ShelterUpdate({ shelter }: { shelter: UpdateData }){
                 <input className={errors.capacity ? "error" : ""} id="capacity" name="capacity" type="number" placeholder="Ex: 100" value={form.capacity} onChange={handleChange} />
 
                 <div className='form-photo-container'>
-                    <div>
                         <label htmlFor="photo_url">Foto do local:</label>
-                        <input id="photo_url" name="photo_url" placeholder="Cole a URL da imagem" value={form.photo_url} onChange={handleChange} />
-                    </div>
-                    <div>
-                        {form.photo_url && (
-                            <img src={form.photo_url} alt="Pré-visualização do abrigo" />
-                        )}
-                    </div>
+                        <img className={(image || form.photo_url) ? "shelter-img" : "shelter-no-img"} src={image ? URL.createObjectURL(image) : form.photo_url ? form.photo_url : "/icon/imgSubmitIcon.png"} alt="Pré-visualização do abrigo" onClick={() => inputFileRef.current?.click()} />
+                        <input ref={inputFileRef} id="photo_url" name="photo_url" type="file" hidden accept="image/*" onChange={(e) => { if (e.target.files?.[0]) { setImage(e.target.files[0]); }}}/>
                 </div>
 
                 <div className='form-buttons-container'>

@@ -18,7 +18,7 @@ export default function Register() {
   const inputFileRef = useRef<HTMLInputElement>(null);
 
 
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState<File | null>(null);
   const [form, setForm] = useState({
     name: "",
     nickname: "",
@@ -130,21 +130,26 @@ export default function Register() {
       setLoader(true);
 
       //Faz o upload da imagem
-      const fileName = `${Date.now()}-shelter-${image.name}`;
+      let photoUrl = "";
 
-      const { data: uploadData, error } = await supabase.storage.from("shelters").upload(fileName, image);
+      if (image) {
+        const fileName = `${form.nickname}-${Date.now()}-shelter-${image.name}`;
 
-      if (error) {
-        await alert("Houve um erro ao enviar o arquivo. Tente novamente.");
-        return;
+        const { data: uploadData, error } = await supabase.storage.from("shelters").upload(fileName, image);
+
+        if (error) {
+          await alert("Houve um erro ao enviar o arquivo. Tente novamente.");
+          setLoader(false);
+          return;
+        }
+
+        const { data: publicUrlData } = supabase.storage.from("shelters").getPublicUrl(uploadData.path);
+        photoUrl = publicUrlData.publicUrl;
       }
 
-      const { data: publicUrlData } = supabase.storage.from("shelters").getPublicUrl(uploadData.path);
-
       //Armazena e envia para o banco de dados
-      const { confirmPassword, ...dataToSend } = {...form, photo_url: publicUrlData.publicUrl};
+      const { confirmPassword, ...dataToSend } = {...form, photo_url: photoUrl};
       void confirmPassword;
-      console.log("Enviando:", dataToSend);
       await registerShelter(dataToSend);
 
       await alert("Cadastro realizado com sucesso!");

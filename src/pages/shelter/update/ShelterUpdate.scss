@@ -126,32 +126,30 @@ form{
     .form-photo-container{
         width: 90%;
         display: flex;
-        column-gap: 24px;
-        margin-top: 20px;
+        flex-direction: column;
 
-        div:first-child{
-            flex: 1;
-            label{
-                margin-bottom: 8px;
-            }
-    
-            input{
-                width: 100%;
-            }
+        label{
+            width: 100%;
+        }
+        
+        .shelter-img{
+            width: 300px;
+            margin-top: 8px;
+            cursor: pointer;
+            object-fit: contain;
+            object-position: 100% 0;
         }
 
-        div:last-child{
-            width: 250px;
-
-            img{
-                width: 250px;
-                height: 150px;
-                object-fit: cover;
-                object-position: 100% 0;
-                ;
-            }
+        .shelter-no-img{
+            width: 90%;
+            max-height: 200px;
+            margin-inline: auto;
+            margin-top: 8px;
+            padding-block: 48px;
+            object-fit: contain;
+            background-color: rgba($primary-color-blue, 0.15);
+            cursor: pointer;
         }
-
     }
 }
 
@@ -188,35 +186,6 @@ form{
             div:last-child{
                 width: 100%;
             }
-        }
-        
-        .form-photo-container{
-            column-gap: 0;
-            margin-top: 0;
-            flex-wrap: wrap;
-    
-            div:first-child{
-                flex: auto;
-                width: 100%;
-                margin-bottom: 16px;
-
-                label{
-                    margin-bottom: 4px;
-                }
-            }
-    
-            div:last-child{
-                width: 50%;
-                min-width: 250px;
-                margin-inline: auto;
-    
-                img{
-                    width: 100%;
-                    height: auto;
-                    aspect-ratio: 5 / 3;
-                }
-            }
-    
         }
     }
 }
