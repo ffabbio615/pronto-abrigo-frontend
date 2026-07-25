@@ -1,12 +1,13 @@
 import './ShelterRegister.scss';
 import { usePageLoader } from "../../../hooks/usePageLoader";
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import useStore from '../../../store/useStore';
 import useAlertStore from "../../../store/useAlertStore";
 import axios from "axios";
 import CommonBackground from "../../../components/CommonBackground";
 import { registerShelter } from "../../../services/shelters";
 import { useNavigate } from 'react-router-dom';
+import supabase from "../../../services/supabase";
 
 export default function Register() {
 
@@ -14,10 +15,10 @@ export default function Register() {
   const { setLoader } = useStore();
   const { alert } = useAlertStore();
   const navigate = useNavigate();
+  const inputFileRef = useRef<HTMLInputElement>(null);
 
 
-
-
+  const [image, setImage] = useState(null);
   const [form, setForm] = useState({
     name: "",
     nickname: "",
@@ -45,14 +46,12 @@ export default function Register() {
     }));
   };
 
-
   const passwordRules = {
     length: form.password.length >= 8,
     upper: /[A-Z]/.test(form.password),
     lower: /[a-z]/.test(form.password),
     number: /\d/.test(form.password),
   };
-
 
   const validate = () => {
     const newErrors: Record<string, string> = {};
@@ -71,7 +70,6 @@ export default function Register() {
 
     return Object.keys(newErrors).length === 0;
   };
-
 
   const getCoordinates = async () => {
     if (!form.address) return;
@@ -99,7 +97,6 @@ export default function Register() {
       console.error("Erro ao buscar coordenadas", err);
     }
   };
-
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -131,7 +128,21 @@ export default function Register() {
 
     try {
       setLoader(true);
-      const { confirmPassword, ...dataToSend } = form;
+
+      //Faz o upload da imagem
+      const fileName = `${Date.now()}-shelter-${image.name}`;
+
+      const { data: uploadData, error } = await supabase.storage.from("shelters").upload(fileName, image);
+
+      if (error) {
+        await alert("Houve um erro ao enviar o arquivo. Tente novamente.");
+        return;
+      }
+
+      const { data: publicUrlData } = supabase.storage.from("shelters").getPublicUrl(uploadData.path);
+
+      //Armazena e envia para o banco de dados
+      const { confirmPassword, ...dataToSend } = {...form, photo_url: publicUrlData.publicUrl};
       void confirmPassword;
       console.log("Enviando:", dataToSend);
       await registerShelter(dataToSend);
@@ -218,11 +229,8 @@ export default function Register() {
           </div>
 
           <label htmlFor="photo_url">Foto do local:</label>
-          <input id="photo_url" name="photo_url" placeholder="Cole a URL da imagem" onChange={handleChange} />
-
-          {form.photo_url && (
-            <img src={form.photo_url} alt="Pré-visualização do abrigo" style={{ width: 150, marginTop: 10 }} />
-          )}
+          <img className={image ? "shelter-img" : "shelter-no-img"} src={image ? URL.createObjectURL(image) : "/icon/imgSubmitIcon.png"} alt="Pré-visualização do abrigo" onClick={() => inputFileRef.current?.click()} />
+          <input ref={inputFileRef} id="photo_url" name="photo_url" type="file" hidden accept="image/*" onChange={(e) => { if (e.target.files?.[0]) { setImage(e.target.files[0]); }}}/>
 
           <div className='form-buttons-container'>
             <button type="button" onClick={handleCancel}>Cancelar</button>
