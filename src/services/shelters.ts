@@ -24,6 +24,22 @@ export const getAllShelters = async () => {
   return response.data;
 }
 
+export const getNearbyShelters = async (
+  latitude: number,
+  longitude: number,
+  radius = 20
+) => {
+  const response = await api.get("/shelters/nearby", {
+    params: {
+      lat: latitude,
+      lng: longitude,
+      radius
+    }
+  });
+
+  return response.data;
+};
+
 export const getShelterById = async (shelter_id: number) => {
   const response = await api.get(`/shelters/${shelter_id}`);
   return response.data;

@@ -4,23 +4,35 @@ import { Link } from 'react-router-dom';
 import type { Shelter } from './LandingPage';
 import ShelterModal from './ShelterModal';
 import ShelterCard from './ShelterCard';
-import { getAllShelters } from '../../services/shelters';
+import { getNearbyShelters } from '../../services/shelters';
+import useAlertStore from "../../store/useAlertStore";
 
 export default function SheltersSection() {
 
     const [shelter, setShelter] = useState<Shelter[]>([]);
+    const { alert } = useAlertStore();
+
     useEffect(()=>{
         async function loadShelters(){
             try{
-                const data = await getAllShelters();
+                const position = await new Promise<GeolocationPosition>((resolve, reject) => {
+                    navigator.geolocation.getCurrentPosition(resolve, reject);
+                });
+
+                // const data = await getAllShelters();
+                const data = await getNearbyShelters(
+                    position.coords.latitude,
+                    position.coords.longitude
+                );
                 setShelter(data);
             } catch(error){
                 console.error("Erro ao buscar os abrigos:", error);
+                await alert("Erro ao buscar os abrigos. Por favor, ative sua localização.");
             }
         }
 
         loadShelters();
-    },[]);
+    },[alert]);
 
     const [selected, setSelected] = useState<Shelter | null>(null);
     const [filter, setFilter] = useState<"all" | "open">("all");
