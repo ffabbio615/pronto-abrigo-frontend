@@ -1,5 +1,5 @@
 import './EntityEditModal.scss';
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 type Entity = {
   id: number;
@@ -33,7 +33,7 @@ type UpdateEntity = {
 type Props = {
   entity: Entity;
   onClose: () => void;
-  onSave: (data: UpdateEntity) => void;
+  onSave: (data: UpdateEntity, image: File | null) => void;
 };
 
 export default function EntityEditModal({ entity, onClose, onSave }: Props) {
@@ -50,6 +50,9 @@ export default function EntityEditModal({ entity, onClose, onSave }: Props) {
     status: entity.status,
     exit_reason: entity.exit_reason
   });
+
+  const inputFileRef = useRef<HTMLInputElement>(null);
+  const [image, setImage] = useState<File | null>(null);
 
   const handleChange = <K extends keyof UpdateEntity>(
     field: K,
@@ -88,20 +91,11 @@ export default function EntityEditModal({ entity, onClose, onSave }: Props) {
         {form.allow_public_photo && (
           <>
             <div className='photo-container'>
-                <img
-                src={
-                    form.photo_url ||
-                    "https://cdn-icons-png.flaticon.com/512/149/149071.png"
-                }
-                alt="preview"
-                />
+                {/* <img src={form.photo_url || "/icon/anonymousEntityIcon.png"} alt="preview" /> */}
+                <img className={(image || form.photo_url) ? "entity-img" : "entity-no-img"} src={image ? URL.createObjectURL(image) : form.photo_url ? form.photo_url : "/icon/imgSubmitIcon.png"} alt="Pré-visualização do abrigo" onClick={() => inputFileRef.current?.click()} />
             </div>
-            <input
-              value={form.photo_url || ""}
-              onChange={(e) => handleChange("photo_url", e.target.value)}
-              placeholder="URL da imagem"
-            />
-
+            <input ref={inputFileRef} id="photo_url" name="photo_url" type="file" hidden accept="image/*" onChange={(e) => { if (e.target.files?.[0]) { setImage(e.target.files[0]); }}}/>
+            {/* <input value={form.photo_url || ""} onChange={(e) => handleChange("photo_url", e.target.value)} placeholder="URL da imagem" /> */}
           </>
         )}
 
@@ -132,7 +126,7 @@ export default function EntityEditModal({ entity, onClose, onSave }: Props) {
 
         <div className="modal-actions">
           <button onClick={onClose}>Cancelar</button>
-          <button onClick={() => onSave(form)}>Salvar</button>
+          <button onClick={() => onSave(form, image)}>Salvar</button>
         </div>
 
       </div>

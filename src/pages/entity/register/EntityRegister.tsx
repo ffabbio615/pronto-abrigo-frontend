@@ -1,9 +1,10 @@
 import './EntityRegister.scss';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import useStore from '../../../store/useStore';
 import useAlertStore from "../../../store/useAlertStore";
 import { createEntity } from "../../../services/entities";
 import type {Entity} from "../../../services/entities";
+import supabase from "../../../services/supabase";
 
 type Props = {
   setProfileMenuItem: React.Dispatch<
@@ -18,6 +19,8 @@ export default function EntityRegister({ setProfileMenuItem }: Props) {
 
     const { setLocalLoader } = useStore();
     const { alert } = useAlertStore();
+    const inputFileRef = useRef<HTMLInputElement>(null);
+    const [image, setImage] = useState<File | null>(null);
 
     useEffect(() => {
         setTimeout(()=> setLocalLoader(false), 1000);
@@ -73,41 +76,59 @@ export default function EntityRegister({ setProfileMenuItem }: Props) {
         setLocalLoader(true);
 
         if (!validate()) {
-        await alert("Preencha os campos obrigatórios!");
-        setTimeout(()=> setLocalLoader(false), 300);
-        return;
+            await alert("Preencha os campos obrigatórios!");
+            setTimeout(()=> setLocalLoader(false), 300);
+            return;
         }
 
+        
         try {
-        const dataToSend: Entity = {
-            ...form,
-            species: isAnimal ? form.species : null,
-            breed: isAnimal ? form.breed : null,
-            photo_url: form.allow_public_photo ? form.photo_url : null
-        };
+            
+            //Faz o upload da imagem
+            let photoUrl = "";
+    
+            if (image) {
+                const fileName = `${form.name}-${Date.now()}-entity-${image.name}`;
+    
+                const { data: uploadData, error } = await supabase.storage.from("entities").upload(fileName, image);
+    
+                if (error) {
+                await alert("Houve um erro ao enviar o arquivo. Tente novamente.");
+                return;
+                }
+    
+                const { data: publicUrlData } = supabase.storage.from("entities").getPublicUrl(uploadData.path);
+                photoUrl = publicUrlData.publicUrl;
+            }
 
-        await createEntity(dataToSend);
+            const dataToSend: Entity = {
+                ...form,
+                species: isAnimal ? form.species : null,
+                breed: isAnimal ? form.breed : null,
+                photo_url: form.allow_public_photo ? photoUrl : null
+            };
 
-        await alert("Novo abrigado cadastrado com sucesso!");
+            await createEntity(dataToSend);
 
-        setForm({
-            type: "person",
-            name: "",
-            birth_date: "",
-            estimated_age: "",
-            species: "",
-            breed: "",
-            description: "",
-            photo_url: "",
-            allow_public_photo: false,
-            status: "in_shelter"
-        });
+            await alert("Novo abrigado cadastrado com sucesso!");
 
+            setForm({
+                type: "person",
+                name: "",
+                birth_date: "",
+                estimated_age: "",
+                species: "",
+                breed: "",
+                description: "",
+                photo_url: "",
+                allow_public_photo: false,
+                status: "in_shelter"
+            });
         } catch (err) {
-        console.error(err);
-        await alert("Erro ao cadastrar acolhido!");
+            console.error(err);
+            await alert("Erro ao cadastrar acolhido!");
         } finally {
-        setLocalLoader(false);
+            setLocalLoader(false);
         }
     };
 
@@ -161,12 +182,9 @@ export default function EntityRegister({ setProfileMenuItem }: Props) {
 
                 {form.allow_public_photo && (
                 <>
-                    <label htmlFor="photo_url">URL da foto:</label>
-                    <input id="photo_url" name="photo_url" value={form.photo_url ?? ""} onChange={handleChange} placeholder="Cole o link da imagem" />
-
-                    {form.photo_url && (
-                        <img src={form.photo_url} alt="Miniatura da foto do acolhido" style={{ width: 150, marginTop: 10 }} />
-                    )}
+                    <label htmlFor="photo_url">Foto do desabrigado:</label>
+                    <img className={image ? "entity-img" : "entity-no-img"} src={image ? URL.createObjectURL(image) : "/icon/imgSubmitIcon.png"} alt="Pré-visualização do abrigo" onClick={() => inputFileRef.current?.click()} />
+                    <input ref={inputFileRef} id="photo_url" name="photo_url" type="file" hidden accept="image/*" onChange={(e) => { if (e.target.files?.[0]) { setImage(e.target.files[0]); }}}/>
                 </>
                 )}
 

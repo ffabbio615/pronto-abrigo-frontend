@@ -4,6 +4,7 @@ import { getEntitiesByShelter, updateEntity } from "../../../services/entities";
 import useStore from "../../../store/useStore";
 import useAlertStore from "../../../store/useAlertStore";
 import EntityEditModal from "./EntityEditModal";
+import supabase from "../../../services/supabase";
 
 type Entity = {
   id: number;
@@ -141,30 +142,87 @@ export default function EntityUpdate() {
         });
     }, [entities, filters]);
 
-const handleSave = async (form: UpdateEntity) => {
-    if (!selectedEntity) return;
 
-    const updated = {
-        ...selectedEntity,
-        ...form
+    const getStoragePath = (url: string) => {
+        return decodeURIComponent(url.split("/entities/")[1]);
     };
 
-    try {
-        await updateEntity(selectedEntity.id, updated);
+    const sanitizeFileName = (name: string) => {
+        return name
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .replace(/\s+/g, "-")
+            .replace(/[^a-zA-Z0-9.-]/g, "");
+    };
 
-        const updatedList = entities.map(e =>
-            e.id === selectedEntity.id ? updated : e
-        );
+    const handleSave = async (form: UpdateEntity, image: File | null) => {
+        setLocalLoader(true);
 
-        setEntities(updatedList);
-        setSelectedEntity(null);
+        if (!selectedEntity) return;
 
-        await alert("Atualizado com sucesso!");
-    } catch (err) {
-        console.error(err);
-        await alert("Erro ao atualizar!");
-    }
-};
+        let photoUrl = selectedEntity.photo_url;
+        let oldPhotoPath: string | null = null;
+
+        try {
+
+            if (image) {
+
+                // Guarda o caminho da imagem antiga
+                if (selectedEntity.photo_url) {
+                    oldPhotoPath = getStoragePath(selectedEntity.photo_url);
+                }
+
+                // Upload da nova
+                const fileName = `${sanitizeFileName(form.name)}-${Date.now()}-entity-${sanitizeFileName(image.name)}`;
+
+                const { data: uploadData, error } = await supabase.storage
+                    .from("entities")
+                    .upload(fileName, image);
+
+                if (error) throw error;
+
+                const { data: publicUrlData } = supabase.storage
+                    .from("entities")
+                    .getPublicUrl(uploadData.path);
+
+                photoUrl = publicUrlData.publicUrl;
+            }
+
+            const updated = {
+                ...selectedEntity,
+                ...form,
+                photo_url: photoUrl ?? selectedEntity.photo_url
+            };
+
+            // Atualiza o banco
+            await updateEntity(selectedEntity.id, updated);
+
+            // Remove a imagem antiga somente depois de tudo dar certo
+            if (oldPhotoPath) {
+                const { error } = await supabase.storage
+                    .from("entities")
+                    .remove([oldPhotoPath]);
+
+                if (error) {
+                    console.error(error);
+                }
+            }
+
+            setEntities(prev =>
+                prev.map(e => e.id === selectedEntity.id ? updated : e)
+            );
+
+            setSelectedEntity(null);
+
+            await alert("Atualizado com sucesso!");
+
+        } catch (err) {
+            console.error(err);
+            await alert("Erro ao atualizar!");
+        } finally {
+            setLocalLoader(false);
+        }
+    };
 
     return (
         <>
@@ -242,8 +300,8 @@ const handleSave = async (form: UpdateEntity) => {
                                     {/* <p><strong>Idade:</strong> {item.estimated_age ?? "-"}</p> */}
                                     {item.type === "animal" && (
                                     <div className='animal-informations-container'>
-                                        <p className='entity-species'><strong>Espécie:</strong> {item.species}</p>
-                                        <p className='entity-breed'><strong>Raça:</strong> {item.breed}</p>
+                                        <p className='entity-species'><strong>Espécie: </strong> {item.species}</p>
+                                        <p className='entity-breed'><strong>Raça: </strong> {item.breed}</p>
                                     </div>
                                     )}
                                     
@@ -256,7 +314,10 @@ const handleSave = async (form: UpdateEntity) => {
                                         <p className={`entity-status ${item.status}`}>{getStatusName(item.status)} </p>
                                     </div>
                                     {(item.status==="reunited" || item.status === "released") &&
-                                        <p className='entity-exit-reason'><span>Motivo da saída: </span>{ item.exit_reason}</p>
+                                        <div className='entity-exit-reason'>
+                                            <span>Motivo da saída: </span>
+                                            <p>{ item.exit_reason}</p>
+                                        </div>
                                     }
                                 </div>
                             </div>

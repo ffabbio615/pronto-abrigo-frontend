@@ -110,11 +110,11 @@
             }
 
             .card-body{
-                height: 110px;
+                height: 105px;
                 display: flex;
                 flex-wrap: wrap;
-                row-gap: 9px;
-                margin-bottom: 12px;
+                row-gap: 8px;
+                margin-bottom: 8px;
                 padding-inline: 4px;
                 align-items: start;
 
@@ -149,15 +149,18 @@
                 .animal-informations-container{
                     display: flex;
                     width: 100%;
-                    height: 17px;
+                    height: 20px;
+                    justify-content: space-between;
                     column-gap: 8px;
 
                     .entity-species {
                         @include font-config($fregular, $f14px, $fnormal, $neutral-color-dark-gray, 1);
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
                     }
                     
                     .entity-breed {
-                        width: 130px;
                         @include font-config($fregular, $f14px, $fnormal, $neutral-color-dark-gray, 1);
                         white-space: nowrap;
                         overflow: hidden;
@@ -172,18 +175,18 @@
                 .entity-description {
                     @include font-config($fregular, $f13px, $fnormal, $neutral-color-dark-gray, 1);
                     text-align: justify;
-                    height: 65px;
                     display: -webkit-box;
-                    -webkit-line-clamp: 5;
-                    line-clamp: 5;
+                    -webkit-line-clamp: 3;
+                    line-clamp: 3;
                     -webkit-box-orient: vertical;
                     overflow: hidden;
+                    text-overflow: ellipsis;
                 }
             }
 
             .card-footer {
                 padding-inline: 4px;
-                height: 20px;
+                height: 60px;
 
                 div{
                     display: flex;
@@ -228,7 +231,26 @@
                 }
                 
                 .entity-exit-reason {
-                    text-align: justify;
+                    display: flex;
+                    flex-wrap: wrap;
+                    width: 100%;
+                    height: 20px;
+                    margin-top: 4px;
+                    
+                    span{
+                        width: 100%;
+                        text-align: left;
+                    }
+                    
+                    p{
+                        display: -webkit-box;
+                        -webkit-line-clamp: 1;
+                        line-clamp: 1;
+                        -webkit-box-orient: vertical;
+                        overflow: hidden;
+                        text-align: justify;
+                    }
+
                 }
             
             
