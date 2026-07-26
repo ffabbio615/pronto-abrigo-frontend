@@ -169,7 +169,8 @@ export default function EntityUpdate() {
 
                 // Guarda o caminho da imagem antiga
                 if (selectedEntity.photo_url) {
-                    oldPhotoPath = getStoragePath(selectedEntity.photo_url);
+                    const oldUrl = selectedEntity.photo_url;
+                    oldPhotoPath = getStoragePath(oldUrl);
                 }
 
                 // Upload da nova
