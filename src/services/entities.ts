@@ -23,6 +23,22 @@ export const getEntities = async () => {
   return response.data;
 };
 
+export const getNearbyEntities = async (
+  latitude: number,
+  longitude: number,
+  radius =  20
+) => {
+  const response = await api.get("/entities/nearby", {
+    params: {
+      lat: latitude,
+      lng: longitude,
+      ...(radius !== undefined && { radius })
+    }
+  });
+
+  return response.data;
+};
+
 export const getEntitiesByShelter = async() =>{
   const response = await api.get('/entities/private');
   return response.data;

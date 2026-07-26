@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import "./LandingPage.scss";
 import type { MissingPerson } from "./LandingPage";
 import MissingPersonModal from "./MissingPersonModal";
-import { getEntities } from "../../services/entities";
+import { getNearbyEntities } from "../../services/entities";
+import useAlertStore from "../../store/useAlertStore";
 
 export default function MissingSection() {
   const [people, setPeople] = useState<MissingPerson[]>([]);
@@ -10,15 +11,23 @@ export default function MissingSection() {
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState<MissingPerson | null>(null);
   const [loading, setLoading] = useState(false);
+  const { alert } = useAlertStore();
 
   useEffect(() => {
     async function loadEntities() {
       setLoading(true);
       try {
-        const data = await getEntities();
+        const position = await new Promise<GeolocationPosition>((resolve, reject) => {
+                    navigator.geolocation.getCurrentPosition(resolve, reject);
+        });
+        const data = await getNearbyEntities(
+          position.coords.latitude,
+          position.coords.longitude
+        );
         setPeople(data);
         setFilteredPeople(data);
       } catch (error) {
+        await alert("Erro ao buscar os abrigos. Por favor, ative sua localização.");
         console.error("Erro ao buscar os abrigados:", error);
       } finally {
         setLoading(false);
@@ -26,7 +35,7 @@ export default function MissingSection() {
     }
 
     loadEntities();
-  }, []);
+  }, [alert]);
 
   const handleSearch = (val: string) => {
     setQuery(val);
