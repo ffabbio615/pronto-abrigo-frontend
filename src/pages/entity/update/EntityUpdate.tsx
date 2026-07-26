@@ -146,7 +146,9 @@ export default function EntityUpdate() {
     const getStoragePath = (url?: string) => {
         if (!url) return null;
 
-        return decodeURIComponent(url.split("/entities/")[1]);
+        const path = url.split("/entities/")[1];
+
+        return path ? decodeURIComponent(path) : null;
     };
 
     const sanitizeFileName = (name: string) => {
@@ -171,12 +173,11 @@ export default function EntityUpdate() {
 
                 // Guarda o caminho da imagem antiga
                 if (selectedEntity.photo_url) {
-                    const oldUrl = selectedEntity.photo_url;
-                    oldPhotoPath = getStoragePath(oldUrl);
+                    oldPhotoPath = getStoragePath(selectedEntity.photo_url);
                 }
 
                 // Upload da nova
-                const fileName = `${sanitizeFileName(form.name)}-${Date.now()}-entity-${sanitizeFileName(image.name)}`;
+                const fileName = `${sanitizeFileName(form.name ?? "entity")}-${Date.now()}-entity-${sanitizeFileName(image.name)}`;
 
                 const { data: uploadData, error } = await supabase.storage
                     .from("entities")
