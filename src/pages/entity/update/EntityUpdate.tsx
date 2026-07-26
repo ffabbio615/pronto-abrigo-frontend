@@ -143,7 +143,9 @@ export default function EntityUpdate() {
     }, [entities, filters]);
 
 
-    const getStoragePath = (url: string) => {
+    const getStoragePath = (url?: string) => {
+        if (!url) return null;
+
         return decodeURIComponent(url.split("/entities/")[1]);
     };
 
@@ -169,7 +171,8 @@ export default function EntityUpdate() {
 
                 // Guarda o caminho da imagem antiga
                 if (selectedEntity.photo_url) {
-                    oldPhotoPath = getStoragePath(selectedEntity.photo_url);
+                    const oldUrl = selectedEntity.photo_url;
+                    oldPhotoPath = getStoragePath(oldUrl);
                 }
 
                 // Upload da nova
