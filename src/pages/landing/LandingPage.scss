@@ -1658,6 +1658,7 @@ h1, h2, h3, h4 {
   .prevention__grid { grid-template-columns: repeat(2, 1fr); }
   .weather__layout { grid-template-columns: 1fr; }
   .supplies-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .btn--outline { background: var(--blue); color: var(--white); border: none; }
 }
 
 @media (max-width: 768px) {
