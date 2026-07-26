@@ -291,12 +291,12 @@ export default function EntityUpdate() {
                                 <div className="card-body">
                                     <div className='name-age-container'>
                                         <div className="name-icon">
-                                            <strong className='entity-name'>{item.name}</strong>
                                             {item.type === "person" ? 
                                                 <img src='./icon/personIcon.png' alt='Imagem da pessoa acolhida' /> 
                                                 :
                                                 <img src='./icon/animalIcon.png' alt='Imagem do animal acolhido' />
                                             }
+                                            <strong className='entity-name'>{item.name}</strong>
                                         </div>
                                             <p className='entity-age'>{calculateAge(item.birth_date, item.estimated_age)} anos</p>
                                     </div>

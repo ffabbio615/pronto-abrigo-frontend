@@ -70,6 +70,14 @@ export default function EntityRegister({ setProfileMenuItem }: Props) {
         return Object.keys(newErrors).length === 0;
     };
 
+    const sanitizeFileName = (name: string) => {
+        return name
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .replace(/\s+/g, "-")
+            .replace(/[^a-zA-Z0-9.-]/g, "");
+    };
+
 
     const handleSubmit = async (e: React.SubmitEvent) => {
         e.preventDefault();
@@ -86,9 +94,9 @@ export default function EntityRegister({ setProfileMenuItem }: Props) {
             
             //Faz o upload da imagem
             let photoUrl = "";
-    
+            
             if (image) {
-                const fileName = `${form.name}-${Date.now()}-entity-${image.name}`;
+                const fileName = `${sanitizeFileName(form.name ?? "entity")}-${Date.now()}-entity-${image.name}`;
     
                 const { data: uploadData, error } = await supabase.storage.from("entities").upload(fileName, image);
     

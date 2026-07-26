@@ -82,7 +82,6 @@
 
         .entity-card{
             width: 300px;
-            // max-width: 300px;
             background-color: $neutral-color-white;
             padding: 12px;
             border-radius: 20px;
@@ -125,15 +124,23 @@
                     align-items: center;
                     width: 100%;
                     height: 18px;
-                
+                    
                     .name-icon {
                         display: flex;
                         align-items: center;
                         gap: 8px; // espaço entre nome e ícone
                     }
-
+                    
                     .entity-name {
                         @include font-config($fbold, $f18px, $fnormal, $neutral-color-dark-gray, 1);
+                        width: 20ch;
+                        max-width: 160px;
+                        display: -webkit-box;
+                        -webkit-line-clamp: 1;
+                        line-clamp: 1;
+                        -webkit-box-orient: vertical;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
                     }
 
                     img{
