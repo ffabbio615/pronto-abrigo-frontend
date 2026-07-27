@@ -26,7 +26,7 @@ export const getEntities = async () => {
 export const getNearbyEntities = async (
   latitude: number,
   longitude: number,
-  radius =  20
+  radius =  100
 ) => {
   const response = await api.get("/entities/nearby", {
     params: {
