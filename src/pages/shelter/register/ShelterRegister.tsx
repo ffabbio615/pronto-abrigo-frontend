@@ -97,6 +97,14 @@ export default function Register() {
       console.error("Erro ao buscar coordenadas", err);
     }
   };
+  
+  const sanitizeFileName = (name: string) => {
+    return name
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/\s+/g, "-")
+        .replace(/[^a-zA-Z0-9.-]/g, "");
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -133,7 +141,7 @@ export default function Register() {
       let photoUrl = "";
 
       if (image) {
-        const fileName = `${form.nickname}-${Date.now()}-shelter-${image.name}`;
+        const fileName = sanitizeFileName(`${form.nickname}-${Date.now()}-shelter-${image.name}`);
 
         const { data: uploadData, error } = await supabase.storage.from("shelters").upload(fileName, image);
 

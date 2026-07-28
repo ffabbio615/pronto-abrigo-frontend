@@ -117,6 +117,14 @@ export default function ShelterUpdate({ shelter }: { shelter: UpdateData }){
         return url.split("/shelters/")[1];
     };
 
+    const sanitizeFileName = (name: string) => {
+        return name
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .replace(/\s+/g, "-")
+            .replace(/[^a-zA-Z0-9.-]/g, "");
+    };
+
     const handleUpdate = async (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -162,7 +170,7 @@ export default function ShelterUpdate({ shelter }: { shelter: UpdateData }){
 
 
             // sobe nova imagem
-            const fileName = `${shelter.nickname}-${Date.now()}-shelter-${image.name}`;
+            const fileName = sanitizeFileName(`${shelter.nickname}-${Date.now()}-shelter-${image.name}`);
 
             const { data: uploadData, error } = await supabase.storage
                 .from("shelters")

@@ -41,6 +41,11 @@
         overflow-y: scroll;
         padding: 20px;
 
+        .empty-supply-title{
+            text-align: center;
+            @include font-config($fbold, 16px, $fnormal, $neutral-color-dark-gray, 1);
+        }
+
         .card-container{
             width: 100%;
             max-width: 400px;
@@ -279,6 +284,17 @@
 
         .card-container-edit-mode{
             height: 192px;
+
+            .title-icon-container{
+
+                strong{
+                    display: -webkit-box;
+                    -webkit-line-clamp: 5;
+                    -webkit-box-orient: vertical;
+                    line-clamp: 5;
+                    overflow: hidden;
+                }
+            }
         }
 
     }

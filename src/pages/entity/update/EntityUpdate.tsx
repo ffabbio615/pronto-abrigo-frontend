@@ -177,7 +177,7 @@ export default function EntityUpdate() {
                 }
 
                 // Upload da nova
-                const fileName = `${sanitizeFileName(form.name ?? "entity")}-${Date.now()}-entity-${sanitizeFileName(image.name)}`;
+                const fileName = sanitizeFileName(`${form.name ?? "entity"}-${Date.now()}-entity-${image.name}`);
 
                 const { data: uploadData, error } = await supabase.storage
                     .from("entities")

@@ -111,7 +111,7 @@ export default function SupplyUpdate() {
 
             <div className='supply-cards-container'>
                 {supplies.length === 0 ? (
-                    <p>Nenhum mantimento cadastrado</p>
+                    <p className='empty-supply-title'>Nenhum mantimento cadastrado</p>
                 ) : (
                     supplies.map((item) => (
                         <div className={editingId === item.id && editingItem ? 'card-container card-container-edit-mode' : 'card-container'} key={item.id}>                          

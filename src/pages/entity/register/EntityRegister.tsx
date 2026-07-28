@@ -96,7 +96,7 @@ export default function EntityRegister({ setProfileMenuItem }: Props) {
             let photoUrl = "";
             
             if (image) {
-                const fileName = `${sanitizeFileName(form.name ?? "entity")}-${Date.now()}-entity-${image.name}`;
+                const fileName = sanitizeFileName(`${form.name ?? "entity"}-${Date.now()}-entity-${image.name}`);
     
                 const { data: uploadData, error } = await supabase.storage.from("entities").upload(fileName, image);
     
