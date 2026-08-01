@@ -77,7 +77,7 @@ type Weather = {
 
 export default function WeatherSection() {
 
-    const [loading, setLoading] = useState(false);
+    const [weatherAPIStatus, setWeatherAPIStatus] = useState<"searching" | "found" | "error">("searching");
     const [weather, setWeather] = useState<Weather | null>(null);
     const weekDays: string[] = [];
     
@@ -107,20 +107,25 @@ export default function WeatherSection() {
         const fetchWeather = async (lat: number, lon: number) => {
     
             const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${weatherApiKey}&q=${lat},${lon}&days=5&alerts=yes&aqi=no`);
+
+            if (!response.ok) {
+                throw new Error("Erro ao buscar clima");
+            }
+
             const data: Weather = await response.json();
             return data;
         };
         
         const loadWeather = async () => {
-            setLoading(true);
             try {
                 const position = await getUserLocation();
                 const lat = position.coords.latitude;
                 const lon = position.coords.longitude;
                 setWeather(await fetchWeather(lat, lon));
-                setLoading(false);
+                setWeatherAPIStatus("found");
             } catch (error) {
                 console.error(error);
+                setWeatherAPIStatus("error");
             }
         };
 
@@ -262,11 +267,11 @@ export default function WeatherSection() {
                         <h2 className="section-title">Alertas ativos<br />agora na sua cidade</h2>
                     </div>
                     {/* LOADING */}
-                    {loading ? (
+                    {weatherAPIStatus === "searching" ? (
                         <div className="loading-row">
                             <div className="skeleton skeleton--weather" />
                         </div>
-                    ) :
+                    ) : weatherAPIStatus === "found" ? (
                         <div className="weather__layout">
                             <div className="weather__alerts">
                                 {MOCK_ALERTS.map(a => (
@@ -312,7 +317,9 @@ export default function WeatherSection() {
                             </div>
                             </div>
                         </div>
-                    }
+                    ) :
+                    <p className='weather-text-error'>O sistema não encontrou o clima para sua localidade! <br></br> Tente atualizar a página.</p>
+                    } 
                 </div>
         </section>
     );

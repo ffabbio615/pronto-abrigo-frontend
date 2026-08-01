@@ -245,6 +245,10 @@ h1, h2, h3, h4 {
   background-size: 800px 100%;
 }
 
+.section--dark .container .weather-text-error{
+  text-align: center;
+}
+
 .loading-row { display: flex; flex-direction: column; gap: 16px; overflow: hidden; }
 .skeleton--person { height: 72px; flex: 1; min-width: 220px; border-radius: var(--radius-sm); }
 .skeleton--supply { height: 100px; width: 100%; border-radius: var(--radius-sm); background: linear-gradient(90deg, rgba(0,0,0,0.04) 25%, rgba(0,0,0,0.09) 50%, rgba(0,0,0,0.04) 75%); background-size: 800px 100%; }
