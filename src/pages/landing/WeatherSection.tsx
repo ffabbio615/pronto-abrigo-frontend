@@ -46,35 +46,6 @@ type Weather = {
     }
 }
 
-// type Wheather = {
-//     "location": {
-//         "name": "Rio De Janeiro",
-//         "region": "Rio de Janeiro",
-//         "country": "Brazil",
-//         "tz_id": "America/Sao_Paulo", //Onde está localizado o Fuso horário
-//         "localtime": "2026-05-22 16:34"
-//     },
-//     "current": {
-//         "last_updated": "2026-05-22 16:30",
-//         "temp_c": 21.1,
-//         "is_day": 1,
-//         "condition": {
-//             "text": "Overcast", //Condição atual do clima (Nublado, ensolarado, etc)
-//             "icon": "//cdn.weatherapi.com/weather/64x64/day/122.png", //url do ícone de condição do clima
-//             "code": 1009
-//         },
-//         "wind_kph": 6.8,
-//         "humidity": 88, //Porcentagem de umidade
-//         "feelslike_c": 21.1,
-//         "windchill_c": 20.8, //Sensação térmica
-//         "heatindex_c": 20.8, //Sensação de calor
-//         "uv": 0.4, //Índice UV, que vai da escala 0 a 2 (Baixo) | 3 a 5 (Moderado) | 6 a 7 (Alto) | 8 a 10 (Muito Alto) | 11+ (Extremo)
-//         "gust_kph": 9.4, //Rajadas de vento repentino com média que duram menos de 20 segundos
-//         "will_it_rain": 1,
-//         "chance_of_rain": 71
-//     }
-// }
-
 export default function WeatherSection() {
 
     const [weatherAPIStatus, setWeatherAPIStatus] = useState<"searching" | "found" | "error">("searching");
@@ -131,14 +102,6 @@ export default function WeatherSection() {
 
         loadWeather();
     },[]);
-
-    const getWeatherDayInfo = (orderDay: number, item: "min" | "max" | "humidity" | "icon")=>{
-        if(!weather) return;
-        if(item === "min") return weather.forecast.forecastday[orderDay].day.mintemp_c.toFixed(0);
-        if(item === "max") return weather.forecast.forecastday[orderDay].day.maxtemp_c.toFixed(0);
-        if(item === "humidity") return weather.forecast.forecastday[orderDay].day.daily_chance_of_rain.toFixed(0);
-        if(item === "icon") return weather.forecast.forecastday[orderDay].day.condition.icon;
-    }
 
     const getWindAlert = () => {
         if(!weather) return;
@@ -294,25 +257,22 @@ export default function WeatherSection() {
                             </div>
                             <div className="weather__forecast">
                             <div className="forecast-card">
-                                <h3>Previsão para 5 dias - {weather && `${weather.location.region}`} <br/> {weather && `${weather.location.name}`}</h3>
+                                <h3>Previsão para 3 dias - {weather && `${weather.location.region}`} <br/> {weather && `${weather.location.name}`}</h3>
                                 <div className="forecast__days">
-                                {[
-                                    { day: "HOJE", icon: getWeatherDayInfo(0, "icon"), high: getWeatherDayInfo(0, "max"), low: getWeatherDayInfo(0, "min"), rain: getWeatherDayInfo(0, "humidity") },
-                                    { day: weekDays[1], icon: getWeatherDayInfo(1, "icon"), high: getWeatherDayInfo(1, "max"), low: getWeatherDayInfo(1, "min"), rain: getWeatherDayInfo(1, "humidity") },
-                                    { day: weekDays[2], icon: getWeatherDayInfo(2, "icon"), high: getWeatherDayInfo(2, "max"), low: getWeatherDayInfo(2, "min"), rain: getWeatherDayInfo(2, "humidity") },
-                                    { day: weekDays[3], icon: getWeatherDayInfo(3, "icon"), high: getWeatherDayInfo(3, "max"), low: getWeatherDayInfo(3, "min"), rain: getWeatherDayInfo(3, "humidity") },
-                                    { day: weekDays[4], icon: getWeatherDayInfo(4, "icon"), high: getWeatherDayInfo(4, "max"), low: getWeatherDayInfo(4, "min"), rain: getWeatherDayInfo(4, "humidity") },
-                                ].map(d => (
-                                    <div key={d.day} className="forecast__day">
-                                    <span className="forecast__label">{d.day}</span>
-                                    <img className="forecast__icon" src={d.icon}/>
-                                    <span className="forecast__temp">{d.high}°<em>{d.low}°</em></span>
-                                    <div className="forecast__rain-bar">
-                                        <div className="forecast__rain-fill" style={{ width: `${d.rain}%` }} />
-                                    </div>
-                                    <span className="forecast__rain-pct">{d.rain}%</span>
-                                    </div>
-                                ))}
+                                    { weather ?
+                                    weather.forecast.forecastday.map((d, index) => (
+                                        <div key={d.date} className="forecast__day">
+                                        <span className="forecast__label">{weekDays[index]}</span>
+                                        <img className="forecast__icon" src={d.day.condition.icon}/>
+                                        <span className="forecast__temp">{d.day.maxtemp_c.toFixed(0)}°<em>{d.day.mintemp_c.toFixed(0)}°</em></span>
+                                        <div className="forecast__rain-bar">
+                                            <div className="forecast__rain-fill" style={{ width: `${d.day.daily_chance_of_rain.toFixed(0)}%` }} />
+                                        </div>
+                                        <span className="forecast__rain-pct">{d.day.daily_chance_of_rain.toFixed(0)}%</span>
+                                        </div>
+                                    ))
+                                    : <p>Não foi possível buscar dados climáticos para a sua região.</p>
+                                }
                                 </div>
                             </div>
                             </div>
