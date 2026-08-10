@@ -271,7 +271,7 @@ export default function WeatherSection() {
                                         <span className="forecast__rain-pct">{d.day.daily_chance_of_rain.toFixed(0)}%</span>
                                         </div>
                                     ))
-                                    : <p>Não foi possível buscar dados climáticos para a sua região.</p>
+                                    : <span>Não foi possível buscar dados climáticos para a sua região.</span>
                                 }
                                 </div>
                             </div>
